@@ -1229,15 +1229,42 @@ nav li:hover, nav li:active {
   scroll-behavior: smooth;
 }
 
-.product {
-  display: flex;
-  scroll-snap-align: center;
-  grid-auto-flow: row dense;
-  flex-direction: column;
-  padding: 18%;
-  padding-top: 0%;
-  padding-bottom: 10%;
+.scroll-slider {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 12%;
+  height: 100vh;
 }
+
+.scroll-wrapper {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scroll-slide {
+  flex: 1 0 100vw;
+  max-width: 100vw;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+
 
 .product-image {
   margin: auto;
@@ -1271,6 +1298,8 @@ nav li:hover, nav li:active {
 }
 
 .deco-dot {
+  position: absolute;
+
   display: flex;
   justify-content: flex-start;
 }
@@ -1383,6 +1412,10 @@ nav li:hover, nav li:active {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     align-items: center;
     justify-content: center;
+
+    position: absolute;
+    bottom: 100px;
+    right: 0px;
   }
 
   .product-image {
@@ -1431,6 +1464,8 @@ nav li:hover, nav li:active {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    bottom: 100px;
   }
 
   .deco-dot li {
