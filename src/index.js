@@ -246,7 +246,12 @@ function setNavStatus() {
         console.log("settings.sliderWidth =", settings.sliderWidth);
 
         // Set slider width and height
-        $sliderWrapper.width(settings.sliderWidth);
+        if (window.innerWidth<1024) {
+            $sliderWrapper.height(Math.ceil((settings.slideHeight * $slides.length)));
+        } else {
+            $sliderWrapper.width(settings.sliderWidth);
+        }
+        
 
         // Set scene
         setScene();
@@ -255,17 +260,12 @@ function setNavStatus() {
     }
 
     function setScene() {
-
-        var xDist = -$slides.width() * ( $slides.length - 1 ),
-            tlParams = { x: xDist, ease: Power2.easeInOut };
-              
         if (scrollScene != null && scrollTimeline != null) {
           
             progress = 0;
             scrollScene.progress(progress);
 
-            scrollTimeline = new TimelineMax();
-            scrollTimeline.to( $sliderWrapper, 2, tlParams );
+            scrollTimeline = createScrollAnimation();
         
             scrollScene.setTween(scrollTimeline);
         
@@ -276,90 +276,17 @@ function setNavStatus() {
             scrollController = new ScrollMagic.Controller();
 
             //Create Tween
-            scrollTimeline = new TimelineMax();
-            
-            // add slide
-            scrollTimeline.to( $sliderWrapper, 4, { x: -$slides.width()*2/5, ease: Power2.easeInOut }, 0);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width(), ease: Power2.easeInOut }, 4);
-            scrollTimeline.to( $sliderWrapper, 3, { x: -$slides.width()*7/5, ease: Power2.easeInOut }, 6);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width()*2, ease: Power2.easeInOut }, 9);
-            scrollTimeline.to( $sliderWrapper, 3, { x: -$slides.width()*12/5, ease: Power2.easeInOut }, 11);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width()*3, ease: Power2.easeInOut }, 14);
-            scrollTimeline.to( $sliderWrapper, 3, { x: -$slides.width()*17/5, ease: Power2.easeInOut }, 16);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width()*4, ease: Power2.easeInOut }, 19);
-
-            // couting number
-            var counter = $(".counter"),
-            counterNumber = $(".counter").children();
-            TweenMax.set(counter, {transformStyle:'preserve-3d'});
-            $.each(counterNumber, function(index, element) {
-                TweenMax.to(element, 1, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
-            });
-            scrollTimeline.add(TweenMax.to( counter, 1, {
-                rotationX:'+=72', transformOrigin:'50% 50% -100px'
-            }), 3);// 1->2
-            scrollTimeline.add(TweenMax.to( counter, 1, {
-                rotationX:'+=72', transformOrigin:'50% 50% -100px'
-            }), 8);// 2->3
-            scrollTimeline.add(TweenMax.to( counter, 1, {
-                rotationX:'+=72', transformOrigin:'50% 50% -100px'
-            }), 13);// 3->4
-            scrollTimeline.add(TweenMax.to( counter, 1, {
-                rotationX:'+=72', transformOrigin:'50% 50% -100px'
-            }), 18);// 3->4
-
-            // number circle
-            var circleProgress = $("#progress .progress__circle");
-            var r = circleProgress.attr("r");
-            var c = Math.PI*r*2;
-            var circleTl = new TimelineMax({ paused: true });
-            TweenMax.set(".progress__circle", {"stroke-dasharray": c, "stroke-dashoffset": c*0.8});
-            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.6}), 3);// 1->2
-            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.4}), 8);// 2->3
-            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.2}), 13);// 3->4
-            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": 0}), 18);// 3->4
-
-            // slide dot
-            var decoDots = $(".deco-dot ul li");
-            TweenMax.set(decoDots[0], {className:"bg-emphasize"});
-            TweenMax.set(decoDots[1], {className:"bg-main"});
-            TweenMax.set(decoDots[2], {className:"bg-second"});
-            TweenMax.set(decoDots[3], {className:"bg-second"});
-            TweenMax.set(decoDots[4], {className:"bg-second"});
-
-            
-            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 3); // 1->2
-            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-emphasize"}), 3);
-            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-main"}), 3);
-            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}), 3);
-            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-second"}), 3);
-            
-            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 8); // 2->3
-            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-seoncd"}), 8);
-            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-emphasize"}), 8);
-            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-main"}), 8);
-            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-second"}), 8);
-
-            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 13); // 3->4
-            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}), 13);
-            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}), 13);
-            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-emphasize"}), 13);
-            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}), 13);
-
-            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 18); // 4->5
-            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}), 18);
-            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}), 18);
-            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}), 18);
-            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}), 18);
-
+            scrollTimeline = createScrollAnimation();
 
             scrollTimeline.progress( progress );
 
             // Create scene to pin and link animation
+            var scrollDuration = (window.innerWidth > 1023) ? settings.sliderWidth: $firstSlide.height()*5;
+            console.log("scrollDuration =",scrollDuration);
             scrollScene = new ScrollMagic.Scene({
                 triggerElement: settings.slider,
                 triggerHook: "onLeave",
-                duration: settings.sliderWidth
+                duration: scrollDuration
             })
             .setPin(settings.slider)
             .setTween(scrollTimeline)
@@ -370,9 +297,106 @@ function setNavStatus() {
         }
         
     }
+
+    function createScrollAnimation () {
+        //Create Tween
+        scrollTimeline = new TimelineMax();
+                
+        // add slide
+        
+        if (window.innerWidth < 1024) {
+            var slideMoveDistance = $slides.height();
+            scrollTimeline.to( $sliderWrapper, 4, { y: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*5/5, ease: Power2.easeInOut }, 4);
+            scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*7/5, ease: Power2.easeInOut }, 6);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*10/5, ease: Power2.easeInOut }, 9);
+            scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*12/5, ease: Power2.easeInOut }, 11);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*15/5, ease: Power2.easeInOut }, 14);
+            scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);
+        } else {
+            var slideMoveDistance = $slides.width();
+            scrollTimeline.to( $sliderWrapper, 4, { x: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*5/5, ease: Power2.easeInOut }, 4);
+            scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*7/5, ease: Power2.easeInOut }, 6);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*10/5, ease: Power2.easeInOut }, 9);
+            scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*12/5, ease: Power2.easeInOut }, 11);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*15/5, ease: Power2.easeInOut }, 14);
+            scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);
+        }
+        
+    
+        // couting number
+        var counter = $(".counter"),
+        counterNumber = $(".counter").children();
+        TweenMax.set(counter, {transformStyle:'preserve-3d'});
+        $.each(counterNumber, function(index, element) {
+            TweenMax.to(element, 1, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
+        });
+        scrollTimeline.add(TweenMax.to( counter, 1, {
+            rotationX:'+=72', transformOrigin:'50% 50% -100px'
+        }), 3);// 1->2
+        scrollTimeline.add(TweenMax.to( counter, 1, {
+            rotationX:'+=72', transformOrigin:'50% 50% -100px'
+        }), 8);// 2->3
+        scrollTimeline.add(TweenMax.to( counter, 1, {
+            rotationX:'+=72', transformOrigin:'50% 50% -100px'
+        }), 13);// 3->4
+        scrollTimeline.add(TweenMax.to( counter, 1, {
+            rotationX:'+=72', transformOrigin:'50% 50% -100px'
+        }), 18);// 3->4
+    
+        // number circle
+        var circleProgress = $("#progress .progress__circle");
+        var r = circleProgress.attr("r");
+        var c = Math.PI*r*2;
+        var circleTl = new TimelineMax({ paused: true });
+        TweenMax.set(".progress__circle", {"stroke-dasharray": c, "stroke-dashoffset": c*0.8});
+        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.6}), 3);// 1->2
+        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.4}), 8);// 2->3
+        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.2}), 13);// 3->4
+        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": 0}), 18);// 3->4
+    
+        // slide dot
+        var decoDots = $(".deco-dot ul li");
+        TweenMax.set(decoDots[0], {className:"bg-emphasize"});
+        TweenMax.set(decoDots[1], {className:"bg-main"});
+        TweenMax.set(decoDots[2], {className:"bg-second"});
+        TweenMax.set(decoDots[3], {className:"bg-second"});
+        TweenMax.set(decoDots[4], {className:"bg-second"});
+    
+        
+        scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 3); // 1->2
+        scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-emphasize"}), 3);
+        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-main"}), 3);
+        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}), 3);
+        scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-second"}), 3);
+        
+        scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 8); // 2->3
+        scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-seoncd"}), 8);
+        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-emphasize"}), 8);
+        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-main"}), 8);
+        scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-second"}), 8);
+    
+        scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 13); // 3->4
+        scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}), 13);
+        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}), 13);
+        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-emphasize"}), 13);
+        scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}), 13);
+    
+        scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 18); // 4->5
+        scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}), 18);
+        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}), 18);
+        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}), 18);
+        scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}), 18);
+    
+        return scrollTimeline;
+    }
     
     $(document).ready(function() {
         scrollSlider(); 
     });
     
 })(jQuery);
+

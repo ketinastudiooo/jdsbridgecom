@@ -1086,8 +1086,7 @@ nav li:hover, nav li:active {
   font-weight: 700;
   text-transform: uppercase;
   line-height: 1.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255);
 }
 
 .compound-experience p {
@@ -1096,8 +1095,7 @@ nav li:hover, nav li:active {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255);
 }
 
 .compound-experience span {
@@ -1111,8 +1109,7 @@ nav li:hover, nav li:active {
   font-size: 0.875rem !important;
   line-height: 1.25rem !important;
   text-transform: uppercase !important;
-  --tw-text-opacity: 1 !important;
-  color: rgb(22 93 178 / var(--tw-text-opacity)) !important;
+  color: rgb(22 93 178) !important;
 }
 
 .is_right {
@@ -1161,29 +1158,34 @@ nav li:hover, nav li:active {
   padding: 0px !important;
   font-size: 0.75rem !important;
   line-height: 1rem !important;
-  --tw-text-opacity: 1 !important;
-  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+  color: rgb(255 255 255) !important;
 }
 
 /*new edit*/
-
-#product-show.container {
-  height: 100vh;
-}
-
 .deco-text {
+  position:absolute;
+  left: 10vw;
+  top: 120px;
+
   font-size: 10px;
-  --tw-text-opacity: 1;
-  color: rgb(50 121 206 / var(--tw-text-opacity));
+  color: rgb(50 121 206);
 }
 
 .pagination {
+  position: absolute;
+  bottom: 100px;
+  right: 10vw;
   display: flex;
-  --tw-translate-x: -7%;
-  --tw-translate-y: 5%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 1023px) {
+  .pagination {
+    bottom: unset;
+    top: 100px;
+    right: 16px;
+  }
 }
 
 .navigation .circle {
@@ -1192,7 +1194,6 @@ nav li:hover, nav li:active {
   width: 25vw;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
 }
 
 .navigation .counting {
@@ -1202,11 +1203,12 @@ nav li:hover, nav li:active {
 }
 
 .navigation .counting .now {
-  font-size: 1.875rem;
+  margin-right: 16px;
+
+  font-size: 30px;
   line-height: 2.25rem;
   font-weight: 600;
-  --tw-text-opacity: 1;
-  color: rgb(50 121 206 / var(--tw-text-opacity));
+  color: rgb(50 121 206);
 }
 
 .navigation .counting .total {
@@ -1214,8 +1216,7 @@ nav li:hover, nav li:active {
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 500;
-  --tw-text-opacity: 1;
-  color: rgb(196 196 196 / var(--tw-text-opacity));
+  color: rgb(196 196 196);
 }
 
 .scroll-slider {
@@ -1223,7 +1224,6 @@ nav li:hover, nav li:active {
   overflow: hidden;
   display: block;
   margin: 0;
-  padding: 10% 0;
   height: 100vh;
 }
 
@@ -1244,22 +1244,47 @@ nav li:hover, nav li:active {
   -webkit-tap-highlight-color: transparent;
 }
 
+@media screen and (max-width: 1023px) {
+  .scroll-wrapper {
+    flex-direction: column;
+  }
+}
+
 .scroll-slide {
   flex: 1 0 100vw;
   max-width: 100vw;
-  height: 100%;
+  min-height: 100vh;
 
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
+@media screen and (max-width: 1023px) {
+  .scroll-slide {
+    flex-direction: column;
+  }
+}
+
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+}
 
 .product-introduce {
   display: grid;
   grid-auto-flow: column;
   align-items: flex-start;
   justify-content: center;
+
+  padding-left: 10vw;
+}
+@media screen and (max-width:1023px) {
+  .product-introduce {
+    padding: 48px;
+  }
 }
 
 .product-introduce h1 {
@@ -1281,16 +1306,23 @@ nav li:hover, nav li:active {
 
 .deco-dot {
   position: absolute;
-
+  left: 10vw;
+  bottom: 100px;
   display: flex;
   justify-content: flex-start;
+}
+@media screen and (max-width:1023px) {
+  .deco-dot {
+    left: 24px;
+    bottom: 64px;
+  }
 }
 
 .deco-dot li {
   margin-bottom: 1rem;
   height: 0.5rem;
   width: 0.5rem;
-  border-radius: 9999px;
+  border-radius: 50%;
 }
 
 #contact p {
@@ -1298,8 +1330,7 @@ nav li:hover, nav li:active {
   padding-bottom: 0.5rem;
   font-size: 0.875rem;
   line-height: 1rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255);
 }
 
 #contact svg {
@@ -1332,14 +1363,6 @@ nav li:hover, nav li:active {
     line-height: 2rem;
   }
 
-  .compound-experience .container {
-    /* @apply py-24 px-0 flex flex-row justify-center */
-  }
-
-  .compound-experience .inner-container {
-    /* @apply w-[17vw] mx-[8%] min-w-min flex flex-col justify-center */
-  }
-
   .compound-experience h2 {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -1348,10 +1371,6 @@ nav li:hover, nav li:active {
   .compound-experience span {
     font-size: 1rem;
     line-height: 1.5rem;
-  }
-
-  .is-right {
-    /* @apply hidden */
   }
 
   .control {
@@ -1376,28 +1395,14 @@ nav li:hover, nav li:active {
     position: absolute !important;
     bottom: 0px !important;
     padding: 1rem !important;
-    --tw-text-opacity: 1 !important;
-    color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+    color: rgb(255 255 255) !important;
   }
 
   /*new edit*/
 
   .deco-text {
     font-size: 16px;
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
-  }
-
-  .pagination {
-    display: flex;
-    --tw-translate-x: 10%;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-    bottom: 100px;
-    right: 0px;
+    color: rgb(50 121 206);
   }
 
   .product-introduce .title {
@@ -1424,8 +1429,7 @@ nav li:hover, nav li:active {
   .pagination .counting .now {
     font-size: 32px;
     font-weight: 600;
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
+    color: rgb(50 121 206);
   }
 
   .pagination .counting .total {
@@ -1433,8 +1437,7 @@ nav li:hover, nav li:active {
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: 500;
-    --tw-text-opacity: 1;
-    color: rgb(196 196 196 / var(--tw-text-opacity));
+    color: rgb(196 196 196);
   }
 
   .deco-dot {
@@ -1442,7 +1445,7 @@ nav li:hover, nav li:active {
     align-items: center;
     justify-content: flex-start;
 
-    bottom: 100px;
+    bottom: 96px;
   }
 
   .deco-dot li {
@@ -1476,13 +1479,11 @@ nav li:hover, nav li:active {
   .scrolled {
     padding-top: 0px;
     padding-bottom: 0px;
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
+    color: rgb(50 121 206);
   }
 
   .scrolled ul {
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
+    color: rgb(50 121 206);
   }
 
   nav ul {
@@ -1500,8 +1501,7 @@ nav li:hover, nav li:active {
   }
 
   nav.active li {
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
+    color: rgb(50 121 206);
   }
 
   nav li:hover, nav li:active, nav li.active {
@@ -1545,22 +1545,8 @@ nav li:hover, nav li:active {
 
   /*new edit*/
 
-  #product-show.container {
-    height: 100vh;
-  }
-
   .deco-text {
-    font-size: 10px;
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
-  }
-
-  .pagination {
-    display: flex;
-    --tw-translate-x: 10%;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    align-items: center;
-    justify-content: center;
+    font-size: 13px;
   }
 
   .navigation .circle {
@@ -1613,7 +1599,7 @@ nav li:hover, nav li:active {
   .product-introduce h1 {
     margin-bottom: 10%;
     align-self: flex-end;
-    font-size: 1.125rem;
+    font-size: 24px;
     font-weight: 600;
     line-height: 1rem;
     --tw-text-opacity: 1;
@@ -1622,7 +1608,7 @@ nav li:hover, nav li:active {
 
   .product-introduce .text {
     padding-left: 0px;
-    font-size: 0.875rem;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1rem;
     --tw-text-opacity: 1;
@@ -2055,7 +2041,6 @@ nav li:hover, nav li:active {
   }
 }
 
-
 /* scroll slider pagination number counter */
 .counter-wrapper {
   position: absolute;
@@ -2063,13 +2048,13 @@ nav li:hover, nav li:active {
 }
 
 .counter-wrapper .counter {
-	position:relative;
+	position: relative;
 	width:21px;
 	height:36px;
 }
 
 .counter-wrapper .counter span {
-	position:absolute;
+	position: absolute;
 	-webkit-backface-visibility: hidden;
 }
 
