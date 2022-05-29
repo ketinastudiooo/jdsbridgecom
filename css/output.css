@@ -1165,10 +1165,11 @@ nav li:hover, nav li:active {
 .deco-text {
   position:absolute;
   left: 10vw;
-  top: 120px;
+  top: 100px;
 
   font-size: 10px;
   color: rgb(50 121 206);
+  z-index: 2;
 }
 
 .pagination {
@@ -1184,7 +1185,7 @@ nav li:hover, nav li:active {
   .pagination {
     bottom: unset;
     top: 100px;
-    right: 16px;
+    right: 24px;
   }
 }
 
@@ -1270,7 +1271,7 @@ nav li:hover, nav li:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 48px;
+  padding: 8px 56px;
 }
 
 .product-introduce {
@@ -1283,7 +1284,7 @@ nav li:hover, nav li:active {
 }
 @media screen and (max-width:1023px) {
   .product-introduce {
-    padding: 48px;
+    padding: 8px 56px;
   }
 }
 
