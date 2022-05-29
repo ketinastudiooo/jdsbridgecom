@@ -60,30 +60,6 @@ function setPizzaDot(index) {
         }
     });
 }
-/* 
-// product 數字跳動
-let now = 0;
-pizzaBox.addEventListener("scroll", (e) => {
-    let single = 0;
-    let index = 0;
-
-    single = (e.target.scrollWidth / 5) - 10;
-    index = Math.trunc(e.target.scrollLeft / single);
-    console.log(`total: ${e.target.scrollWidth}, scrollLeft: ${e.target.scrollLeft}, single: ${single}, index: ${index}`);
-
-    now = index + 1;
-
-    if (Number(pizzaNumber.innerHTML) !== now) {
-        pizzaNumber.innerHTML = "0" + now.toFixed();
-        pizzaDots.forEach((item) => {
-            item.setAttribute("class", "");
-        });
-
-        setPizzaDot(index);
-    }
-});
-*/
-
 
 let navIsOpen = false;
 let mobileNavTimeLine = gsap.timeline({ paused: true });
@@ -301,7 +277,82 @@ function setNavStatus() {
 
             //Create Tween
             scrollTimeline = new TimelineMax();
-            scrollTimeline.to( $sliderWrapper, 2, tlParams );
+            
+            // add slide
+            scrollTimeline.to( $sliderWrapper, 4, { x: -$slides.width()*2/5, ease: Power2.easeInOut }, 0);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width(), ease: Power2.easeInOut }, 4);
+            scrollTimeline.to( $sliderWrapper, 3, { x: -$slides.width()*7/5, ease: Power2.easeInOut }, 6);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width()*2, ease: Power2.easeInOut }, 9);
+            scrollTimeline.to( $sliderWrapper, 3, { x: -$slides.width()*12/5, ease: Power2.easeInOut }, 11);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width()*3, ease: Power2.easeInOut }, 14);
+            scrollTimeline.to( $sliderWrapper, 3, { x: -$slides.width()*17/5, ease: Power2.easeInOut }, 16);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -$slides.width()*4, ease: Power2.easeInOut }, 19);
+
+            // couting number
+            var counter = $(".counter"),
+            counterNumber = $(".counter").children();
+            TweenMax.set(counter, {transformStyle:'preserve-3d'});
+            $.each(counterNumber, function(index, element) {
+                TweenMax.to(element, 1, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
+            });
+            scrollTimeline.add(TweenMax.to( counter, 1, {
+                rotationX:'+=72', transformOrigin:'50% 50% -100px'
+            }), 3);// 1->2
+            scrollTimeline.add(TweenMax.to( counter, 1, {
+                rotationX:'+=72', transformOrigin:'50% 50% -100px'
+            }), 8);// 2->3
+            scrollTimeline.add(TweenMax.to( counter, 1, {
+                rotationX:'+=72', transformOrigin:'50% 50% -100px'
+            }), 13);// 3->4
+            scrollTimeline.add(TweenMax.to( counter, 1, {
+                rotationX:'+=72', transformOrigin:'50% 50% -100px'
+            }), 18);// 3->4
+
+            // number circle
+            var circleProgress = $("#progress .progress__circle");
+            var r = circleProgress.attr("r");
+            var c = Math.PI*r*2;
+            var circleTl = new TimelineMax({ paused: true });
+            TweenMax.set(".progress__circle", {"stroke-dasharray": c, "stroke-dashoffset": c*0.8});
+            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.6}), 3);// 1->2
+            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.4}), 8);// 2->3
+            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.2}), 13);// 3->4
+            scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": 0}), 18);// 3->4
+
+            // slide dot
+            var decoDots = $(".deco-dot ul li");
+            TweenMax.set(decoDots[0], {className:"bg-emphasize"});
+            TweenMax.set(decoDots[1], {className:"bg-main"});
+            TweenMax.set(decoDots[2], {className:"bg-second"});
+            TweenMax.set(decoDots[3], {className:"bg-second"});
+            TweenMax.set(decoDots[4], {className:"bg-second"});
+
+            
+            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 3); // 1->2
+            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-emphasize"}), 3);
+            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-main"}), 3);
+            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}), 3);
+            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-second"}), 3);
+            
+            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 8); // 2->3
+            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-seoncd"}), 8);
+            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-emphasize"}), 8);
+            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-main"}), 8);
+            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-second"}), 8);
+
+            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 13); // 3->4
+            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}), 13);
+            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}), 13);
+            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-emphasize"}), 13);
+            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}), 13);
+
+            scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}), 18); // 4->5
+            scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}), 18);
+            scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}), 18);
+            scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}), 18);
+            scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}), 18);
+
+
             scrollTimeline.progress( progress );
 
             // Create scene to pin and link animation
@@ -312,14 +363,7 @@ function setNavStatus() {
             })
             .setPin(settings.slider)
             .setTween(scrollTimeline)
-            //.setTween(tl)
-            .addIndicators({
-                colorTrigger: "black",
-                colorStart: "black",
-                colorEnd: "black",
-              })
             .addTo(scrollController)
-            
             .on('start', function (event) {
                 scrollTimeline.time(0);
             });
