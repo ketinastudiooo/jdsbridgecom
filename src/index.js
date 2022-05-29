@@ -220,13 +220,14 @@ function setNavStatus() {
         // Set dimensions
         setDimensions();
         
-        // On resize        
+        // On resize
+        /*
         $(window).on( 'resize', function() {
           clearTimeout(resizing);
           resizing = setTimeout(function() {
             setDimensions();
           }, 250); 
-        });
+        });*/
       
     }
 
