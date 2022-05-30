@@ -312,7 +312,7 @@ function setNavStatus() {
             scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*3});
             scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*4});
 
-            switchTiming = [4, 8, 12, 16];
+            switchTiming = [3, 8, 13, 18];
         } else {
             var slideMoveDistance = $slides.width();
             scrollTimeline.to( $sliderWrapper, 4, { x: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
