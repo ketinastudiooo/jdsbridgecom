@@ -2071,12 +2071,12 @@ nav li:hover, nav li:active {
 }
 
 .progress__background {
-  stroke-width: 1;
+  stroke-width: 2;
   stroke: #BEBEBE;
   fill: transparent;
 }
 .progress__circle {
-  stroke-width: 3;
+  stroke-width: 8;
   stroke: #3279CE;
   fill: transparent;
 }

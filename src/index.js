@@ -228,7 +228,6 @@ function setNavStatus() {
             setDimensions();
           }, 250); 
         });*/
-      
     }
 
     function setDimensions() {
@@ -307,14 +306,15 @@ function setNavStatus() {
         
         if (window.innerWidth < 1024) {
             var slideMoveDistance = $slides.height();
-            scrollTimeline.to( $sliderWrapper, 4, { y: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
+            /*scrollTimeline.to( $sliderWrapper, 4, { y: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
             scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*5/5, ease: Power2.easeInOut }, 4);
             scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*7/5, ease: Power2.easeInOut }, 6);
             scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*10/5, ease: Power2.easeInOut }, 9);
             scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*12/5, ease: Power2.easeInOut }, 11);
             scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*15/5, ease: Power2.easeInOut }, 14);
             scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
-            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);*/
+            scrollTimeline.to( $sliderWrapper, 20, { y: -slideMoveDistance*20/5, ease: Power2.easeInOut });
         } else {
             var slideMoveDistance = $slides.width();
             scrollTimeline.to( $sliderWrapper, 4, { x: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
@@ -326,6 +326,7 @@ function setNavStatus() {
             scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
             scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);
         }
+        scrollTimeline.to( $sliderWrapper, 1, {})
         
     
         // couting number
