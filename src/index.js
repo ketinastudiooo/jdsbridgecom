@@ -307,18 +307,10 @@ function setNavStatus() {
         
         if (window.innerWidth < 1024) {
             var slideMoveDistance = $slides.height();
-            /*scrollTimeline.to( $sliderWrapper, 4, { y: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
-            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*5/5, ease: Power2.easeInOut }, 4);
-            scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*7/5, ease: Power2.easeInOut }, 6);
-            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*10/5, ease: Power2.easeInOut }, 9);
-            scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*12/5, ease: Power2.easeInOut }, 11);
-            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*15/5, ease: Power2.easeInOut }, 14);
-            scrollTimeline.to( $sliderWrapper, 3, { y: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
-            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);*/
-            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*1, ease: Power2.easeInOut });
-            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*2, ease: Power2.easeInOut });
-            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*3, ease: Power2.easeInOut });
-            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*4, ease: Power2.easeInOut });
+            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*1});
+            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*2});
+            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*3});
+            scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*4});
 
             switchTiming = [4, 8, 12, 16];
         } else {
