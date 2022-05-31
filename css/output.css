@@ -1171,6 +1171,12 @@ nav li:hover, nav li:active {
   color: rgb(50 121 206);
   z-index: 2;
 }
+@media screen and (max-width:1023px) {
+  .deco-text {
+    top: 70px;
+    left: 24px;
+  }
+}
 
 .pagination {
   position: absolute;
@@ -1184,7 +1190,7 @@ nav li:hover, nav li:active {
 @media screen and (max-width: 1023px) {
   .pagination {
     bottom: unset;
-    top: 100px;
+    top: 70px;
     right: 24px;
   }
 }
