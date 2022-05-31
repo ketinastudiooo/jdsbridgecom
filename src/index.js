@@ -393,6 +393,22 @@ function setNavStatus() {
     $(document).ready(function() {
         scrollSlider(); 
     });
+
+
+    let urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('test')) {
+        var debug = $("#debug");
+        debug.css({position:"fixed", top: "100px", left: 0, "z-index":99});
+        var sh = $(".scroll-slide").height();
+        var vh = window.innerHeight;
+        debug.html(sh + " " + vh);
+
+        document.addEventListener("scroll", () => {
+            sh = $(".scroll-slide").height();
+            vh = window.innerHeight;
+            $("#debug").html(sh + " " + vh);
+        })
+    }
     
 })(jQuery);
 
