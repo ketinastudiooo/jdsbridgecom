@@ -1272,6 +1272,8 @@ nav li:hover, nav li:active {
   justify-content: center;
   align-items: center;
   padding: 8px 56px;
+
+  max-width: 560px;
 }
 
 .product-introduce {
@@ -1291,18 +1293,16 @@ nav li:hover, nav li:active {
 .product-introduce h1 {
   font-size: 1.125rem;
   font-weight: 600;
-  line-height: 1rem;
-  --tw-text-opacity: 1;
-  color: rgb(50 121 206 / var(--tw-text-opacity));
+  line-height: 1;
+  color: rgb(50 121 206);
 }
 
 .product-introduce .text {
   padding-left: 1.5rem;
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1rem;
-  --tw-text-opacity: 1;
-  color: rgb(73 73 73 / var(--tw-text-opacity));
+  line-height: 1.5;
+  color: rgb(73 73 73);
 }
 
 .deco-dot {
@@ -1407,13 +1407,11 @@ nav li:hover, nav li:active {
   }
 
   .product-introduce .title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    font-size: 24px;
   }
 
   .product-introduce .text {
     font-size: 1rem;
-    line-height: 1.5rem;
   }
 
   .navigation .circle {
@@ -1602,18 +1600,16 @@ nav li:hover, nav li:active {
     align-self: flex-end;
     font-size: 24px;
     font-weight: 600;
-    line-height: 1rem;
-    --tw-text-opacity: 1;
-    color: rgb(50 121 206 / var(--tw-text-opacity));
+    line-height: 1.5;
+    color: rgb(50 121 206);
   }
 
   .product-introduce .text {
     padding-left: 0px;
     font-size: 16px;
     font-weight: 400;
-    line-height: 1rem;
-    --tw-text-opacity: 1;
-    color: rgb(73 73 73 / var(--tw-text-opacity));
+
+    color: rgb(73 73 73);
   }
 
   .deco-dot {

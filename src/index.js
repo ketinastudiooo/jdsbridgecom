@@ -221,7 +221,7 @@ function setNavStatus() {
         
         // On resize
 
-        $(window).on( 'resize', function() {
+        /*$(window).on( 'resize', function() {
           clearTimeout(resizing);
           resizing = setTimeout(function() {
             progress = scrollTimeline.progress();
@@ -229,7 +229,7 @@ function setNavStatus() {
             setDimensions();
             window.scrollTo(0, axisY);
           }, 100); 
-        });
+        });*/
     }
 
     function setDimensions() {
@@ -309,10 +309,10 @@ function setNavStatus() {
         
         if (window.innerWidth < 1024) {
             var slideMoveDistance = $slides.height();
-            scrollTimeline.to( $sliderWrapper, 1, { y: -slideMoveDistance*1}, 3);
-            scrollTimeline.to( $sliderWrapper, 1, { y: -slideMoveDistance*2}, 8);
-            scrollTimeline.to( $sliderWrapper, 1, { y: -slideMoveDistance*3}, 13);
-            scrollTimeline.to( $sliderWrapper, 1, { y: -slideMoveDistance*4}, 18);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*1}, 3);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*2}, 8);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*3}, 13);
+            scrollTimeline.to( $sliderWrapper, 2, { y: -slideMoveDistance*4}, 18);
             scrollTimeline.to( $sliderWrapper, 3, {}, 19);
 
             switchTiming = [3, 8, 13, 18];
@@ -326,10 +326,10 @@ function setNavStatus() {
             scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*15/5, ease: Power2.easeInOut }, 14);
             scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
             scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);*/
-            scrollTimeline.to( $sliderWrapper, 1, { x: -slideMoveDistance*1}, 3);
-            scrollTimeline.to( $sliderWrapper, 1, { x: -slideMoveDistance*2}, 8);
-            scrollTimeline.to( $sliderWrapper, 1, { x: -slideMoveDistance*3}, 13);
-            scrollTimeline.to( $sliderWrapper, 1, { x: -slideMoveDistance*4}, 18);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*1}, 3);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*2}, 8);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*3}, 13);
+            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*4}, 18);
             scrollTimeline.to( $sliderWrapper, 3, {}, 19);
 
 
