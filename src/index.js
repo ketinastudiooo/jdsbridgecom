@@ -157,7 +157,6 @@ document.addEventListener("scroll", () => {
         const sectionTop = section.offsetTop;
         if (window.scrollY >= sectionTop - document.querySelector("nav").clientHeight) {
             current = section.getAttribute("id");
-            //console.log("current: ", current);
         }
     });
 
@@ -201,10 +200,10 @@ function setNavStatus() {
     var settings = {},
         resizing = false,
         scrollController = null,
-        scrollTween = null,
         scrollTimeline = null,
         progress = 0,
         scrollScene = null;
+
 
     function scrollSlider(options) {
 
@@ -221,29 +220,25 @@ function setNavStatus() {
         setDimensions();
         
         // On resize
-        /*
+
         $(window).on( 'resize', function() {
           clearTimeout(resizing);
           resizing = setTimeout(function() {
+            progress = scrollTimeline.progress();
+            var axisY = window.scrollY;
             setDimensions();
-          }, 250); 
-        });*/
+            window.scrollTo(0, axisY);
+          }, 100); 
+        });
     }
 
     function setDimensions() {
-
-        settings.slideWidth = $firstSlide.width();
-        settings.slideHeight = $firstSlide.height();
-      
-        console.log("slideWidth:", settings.slideWidth);
-        console.log("slideHeight:", settings.slideHeight);
+        settings.slideWidth = window.innerWidth;
+        settings.slideHeight = window.innerHeight;
 
         // Calculate slider width and height
-        console.log("length =", $slides.length);
         settings.sliderWidth = Math.ceil((settings.slideWidth * $slides.length));
         settings.sliderHeight = $firstSlide.outerHeight(true);
-
-        console.log("settings.sliderWidth =", settings.sliderWidth);
 
         // Set slider width and height
         if (window.innerWidth<1024) {
@@ -252,25 +247,33 @@ function setNavStatus() {
             $sliderWrapper.width(settings.sliderWidth);
         }
         
-
         // Set scene
         setScene();
-
-        //resizing = false;
     }
 
     function setScene() {
         if (scrollScene != null && scrollTimeline != null) {
-          
-            progress = 0;
-            scrollScene.progress(progress);
-
+            //progress = 0;
+            scrollScene.destroy(true);
+            //Create Tween
             scrollTimeline = createScrollAnimation();
-        
-            scrollScene.setTween(scrollTimeline);
-        
-            scrollScene.refresh();
-            console.log("reset");
+
+            scrollTimeline.progress(progress);
+
+            // Create scene to pin and link animation
+            var scrollDuration = (window.innerWidth > 1023) ? settings.sliderWidth: $firstSlide.height()*4;
+            scrollScene = new ScrollMagic.Scene({
+                triggerElement: settings.slider,
+                triggerHook: "onLeave",
+                duration: scrollDuration
+            })
+            .setPin(settings.slider)
+            .setTween(scrollTimeline)
+            .addTo(scrollController)
+            .on('start', function (event) {
+                scrollTimeline.time(0);
+            });
+            
         } else {
             // Init ScrollMagic controller
             scrollController = new ScrollMagic.Controller();
@@ -282,7 +285,6 @@ function setNavStatus() {
 
             // Create scene to pin and link animation
             var scrollDuration = (window.innerWidth > 1023) ? settings.sliderWidth: $firstSlide.height()*4;
-            console.log("scrollDuration =",scrollDuration);
             scrollScene = new ScrollMagic.Scene({
                 triggerElement: settings.slider,
                 triggerHook: "onLeave",
@@ -346,7 +348,6 @@ function setNavStatus() {
             TweenMax.to(element, 1, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
         });
         for (let i=0; i<switchTiming.length; i++) {
-            console.log(switchTiming[i]);
             scrollTimeline.add(TweenMax.to(counter, switchTime, {
                 rotationX:'+=72', transformOrigin:'50% 50% -100px'
             }), switchTiming[i]);
@@ -385,9 +386,7 @@ function setNavStatus() {
         scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}),      switchTiming[2]);
     
         scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}),    switchTiming[3]); // 4->5
-    
 
-        console.log(scrollTimeline);
         return scrollTimeline;
     }
     
