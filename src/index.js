@@ -242,6 +242,7 @@ function setNavStatus() {
 
         // Set slider width and height
         if (window.innerWidth<1024) {
+            $slides.css({"max-height":settings.slideHeight, "min-height": settings.slideHeight, "height": settings.slideHeight});
             $sliderWrapper.height(Math.ceil((settings.slideHeight * $slides.length)));
         } else {
             $sliderWrapper.width(settings.sliderWidth);
@@ -399,12 +400,12 @@ function setNavStatus() {
     if(urlParams.has('test')) {
         var debug = $("#debug");
         debug.css({position:"fixed", top: "100px", left: 0, "z-index":99});
-        var sh = $(".scroll-slide").height();
+        var sh = $slides.height();
         var vh = window.innerHeight;
         debug.html(sh + " " + vh);
 
         document.addEventListener("scroll", () => {
-            sh = $(".scroll-slide").height();
+            sh = $slides.height();
             vh = window.innerHeight;
             $("#debug").html(sh + " " + vh);
         })
