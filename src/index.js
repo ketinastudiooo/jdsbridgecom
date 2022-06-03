@@ -218,6 +218,8 @@ function setNavStatus() {
     var currentSlide = 0;
     var switchTime = 0.5;
 
+    var progressTimeout = null;
+
     var dotClass = [
         ['bg-emphasize', 'bg-main', 'bg-second', 'bg-second', 'bg-second'],
         ['bg-second', 'bg-emphasize', 'bg-main', 'bg-second', 'bg-second'],
@@ -226,8 +228,9 @@ function setNavStatus() {
         ['bg-second', 'bg-second', 'bg-second', 'bg-second', 'bg-main'],
     ];
 
+    // 控制滑鼠滾輪
     var ss = document.querySelector(".scroll-slider")
-    ss.addEventListener('wheel', (event) => {
+    /*ss.addEventListener('wheel', (event) => {
         if (window.scrollY < scrollScene.triggerPosition()) {
             return true;
         }
@@ -246,9 +249,27 @@ function setNavStatus() {
         }
         event.preventDefault();
         return false;
-    });
+    });*/
 
-    $slider.swipe({
+    /*$slides.each((index) => {
+        var swipeSetting = {}
+        if (index > 0) {
+            swipeSetting.swipeDown = (event) => { 
+                console.log("swipeDown at", index);
+                //changeSlide(index - 1); 
+            }
+        }
+        if (index < 4) {
+            swipeSetting.swipeUp = (event) => { 
+                console.log("swipeUp at", index);s
+                //changeSlide(index + 1); 
+            }
+        }
+        console.log(swipeSetting);
+        $(this).swipe(swipeSetting);
+    })*/
+    
+    /*$slider.swipe({
         swipeUp: (event) => {
             console.log("swipeUp at", currentSlide);
             if (currentSlide <4) {
@@ -268,8 +289,8 @@ function setNavStatus() {
                 window.scroll(0, scrollScene.triggerPosition() - window.innerHeight, 'smooth');
             }
         },
-        /*allowPageScroll: "none"*/
-    });
+        //allowPageScroll: "none"
+    });*/
 
     function scrollSlider(options) {
 
@@ -312,15 +333,18 @@ function setNavStatus() {
 
         //Create Tween
         // Create scene to pin and link animation
-        var scrollTimeline = createScrollAnimation();
+        createScrollAnimation();
 
-        var sceneDuration = 10000;
+        var slideDuration = (window.innerWidth < 1024) ? 2000:500;
+        var sceneDuration = slideDuration*4;
+        console.log(sceneDuration);
+        // 0-, 50- 
         slidePos = [
-            50,
-            0.2*sceneDuration+50,
-            0.45*sceneDuration+50,
-            0.7*sceneDuration+50,
-            sceneDuration-50
+            0,
+            slideDuration*1,
+            slideDuration*2,
+            slideDuration*3,
+            slideDuration*4
         ];
 
         scrollScene = new ScrollMagic.Scene({
@@ -329,29 +353,73 @@ function setNavStatus() {
             duration: sceneDuration
         })
             .setPin(settings.slider)
-            .setTween(scrollTimeline)
+            //.setTween(scrollTimeline)
             .addTo(scrollController)
             .on('progress', function (event) {
-                console.log("progress =", event.progress);
-                if (event.progress>=0   && event.progress<0.2) {
-                    currentSlide = 0;
-                }
-                if (event.progress>=0.2 && event.progress<0.4) {
-                    currentSlide = 1;
-                }
-                if (event.progress>=0.4 && event.progress<0.6) {
-                    currentSlide = 2;
-                }
-                if (event.progress>=0.6 && event.progress<0.8) {
-                    currentSlide = 3;
-                }
-                if (event.progress>=0.8 && event.progress<= 1) {
-                    currentSlide = 4;
-                }
+                clearTimeout(progressTimeout);
+                progressTimeout = setTimeout(() => {
+                    scrollY = scrollController.scrollPos();
+                    if (scrollY<slidePos[0]) {
+                        currentSlide = 0;
+                        runAnimation(0);
+                        console.log("anime 0");
+                    }
+                    if (scrollY==slidePos[0] && currentSlide!=0) {
+                        changeSlide(0);
+                    }
+                    if (scrollY>slidePos[0] && scrollY<slidePos[1]) {
+                        if (event.scrollDirection == "FORWARD") {
+                            changeSlide(1);
+                        } else if (event.scrollDirection == "REVERSE") {
+                            changeSlide(0)
+                        }
+                    }
+                    if (scrollY==slidePos[1] && currentSlide!=1) changeSlide(1);
+                    if (scrollY>slidePos[1] && scrollY<slidePos[2]) {
+                        if (event.scrollDirection == "FORWARD") {
+                            changeSlide(2);
+                        } else if (event.scrollDirection == "REVERSE") {
+                            changeSlide(1)
+                        }
+                    }
+                    if (scrollY==slidePos[2] && currentSlide!=2) changeSlide(2);
+                    if (scrollY>slidePos[2] && scrollY<slidePos[3]) {
+                        if (event.scrollDirection == "FORWARD") {
+                            changeSlide(3);
+                        } else if (event.scrollDirection == "REVERSE") {
+                            changeSlide(2)
+                        }
+                    }
+                    if (scrollY==slidePos[3] && currentSlide!=3) changeSlide(3);
+                    if (scrollY>slidePos[3] && scrollY<slidePos[4]) {
+                        if (event.scrollDirection == "FORWARD") {
+                            changeSlide(4);
+                        } else if (event.scrollDirection == "REVERSE") {
+                            changeSlide(3)
+                        }
+                    }
+                    if (scrollY==slidePos[4] && currentSlide!=4) changeSlide(4);
+                    if (scrollY>slidePos[4]) {
+                        currentSlide = 4;
+                        runAnimation(4);
+                        console.log("anime4");
+                    }
+
+                    console.log("progress =", event.progress, event.scrollDirection, "currentSlide =", currentSlide, scrollController.scrollPos());
+                }, 200);
+                
+                /*if (currentSlide != currentScroll) {
+                    changeSlide(currentScroll);
+                }*/
             })
-            .on('start', function (event) {
-                /*scrollTimeline.time(0);*/
-            });
+
+        console.log("triggerPosition =", scrollScene.triggerPosition());
+        for(let i=0; i<5; i++) {
+            slidePos[i] = Math.ceil(scrollScene.triggerPosition()) + slidePos[i];
+        }
+        slidePos[0] += 10;
+        slidePos[4] -= 10;
+        console.log(slidePos);
     }
 
     function changeSlide(index, direction) { // index = 1
@@ -359,9 +427,9 @@ function setNavStatus() {
 
         scrollDetect = false;
         currentSlide = index;
-        /*runAnimation(currentSlide);*/
+        runAnimation(currentSlide);
         setTimeout(() => {
-            scrollController.scrollTo(scrollScene.triggerPosition() + slidePos[currentSlide]);
+            scrollController.scrollTo(slidePos[currentSlide]);
             setTimeout(() => {
                 console.log("scrollDetect true");
                 scrollDetect = true;
@@ -370,7 +438,16 @@ function setNavStatus() {
     }
 
     function runAnimation (index) {
-        TweenMax.to($sliderWrapper, switchTime, { x: -window.innerWidth * (index)});
+        var slideDist = 0;
+        if (window.innerWidth < 1024) {
+            slideDist = window.innerHeight;
+            TweenMax.to($sliderWrapper, switchTime, { y: -slideDist * (index)});
+        } else {
+            slideDist = window.innerWidth;
+            TweenMax.to($sliderWrapper, switchTime, { x: -slideDist * (index)});
+        }
+
+        
         TweenMax.to(".counter", switchTime, {
             rotationX: 72 * index, transformOrigin: '50% 50% -100px'
         })
@@ -386,6 +463,22 @@ function setNavStatus() {
         })
     }
 
+    function createScrollAnimation() {    
+        // couting number
+        var counter = $(".counter"),
+        counterNumber = $(".counter").children();
+        TweenMax.set(counter, {transformStyle:'preserve-3d'});
+        $.each(counterNumber, function(index, element) {
+            TweenMax.to(element, switchTime, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
+        });
+        // number circle
+        var circleProgress = $("#progress .progress__circle");
+        var r = circleProgress.attr("r");
+        var c = Math.PI*r*2;
+        TweenMax.set(".progress__circle", {"stroke-dasharray": c, "stroke-dashoffset": c*0.8});
+    }
+
+    /*
     function createScrollAnimation() {
         //Create Tween
         var scrollTimeline = new TimelineMax();
@@ -457,7 +550,7 @@ function setNavStatus() {
         scrollTimeline.add(TweenMax.to(decoDots[3], switchTime, {className: "bg-second"}),    switchTiming[3]); // 4->5
 
         return scrollTimeline;
-    }
+    }*/
 
     $(document).ready(function () {
         scrollSlider();
