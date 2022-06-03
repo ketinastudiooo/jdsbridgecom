@@ -1218,7 +1218,7 @@ nav li:hover, nav li:active {
 .navigation .counting .now {
   margin-right: 16px;
   font-size: 30px;
-  line-height: 1.5;
+  line-height: 1.2;
   font-weight: 600;
   color: rgb(50 121 206);
 }

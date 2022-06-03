@@ -1,3 +1,12 @@
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+} else {
+    window.onbeforeunload = function () {
+        console.log('scrolltop');
+        window.scrollTo(0, 0);
+    }
+}
+
 const pizzaDotStyle = {
     target: "bg-emphasize",
     secondary: "bg-main",
@@ -188,22 +197,79 @@ function setNavStatus() {
 }
 
 // horizontal slider
-!(function($) {
+!(function ($) {
 
     'use strict';
-  
+
+    
+
     var $slider = $('.scroll-slider'),
         $slides = $('.scroll-slide'),
         $sliderWrapper = $('.scroll-wrapper'),
         $firstSlide = $slides.first();
 
     var settings = {},
-        resizing = false,
+        slideNum = $slides.length,
         scrollController = null,
-        scrollTimeline = null,
-        progress = 0,
         scrollScene = null;
 
+    var scrollDetect = true;
+    var slidePos = null;
+    var currentSlide = 0;
+    var switchTime = 0.5;
+
+    var dotClass = [
+        ['bg-emphasize', 'bg-main', 'bg-second', 'bg-second', 'bg-second'],
+        ['bg-second', 'bg-emphasize', 'bg-main', 'bg-second', 'bg-second'],
+        ['bg-second', 'bg-second', 'bg-emphasize', 'bg-main', 'bg-second'],
+        ['bg-second', 'bg-second', 'bg-second', 'bg-emphasize', 'bg-main'],
+        ['bg-second', 'bg-second', 'bg-second', 'bg-second', 'bg-main'],
+    ];
+
+    var ss = document.querySelector(".scroll-slider")
+    ss.addEventListener('wheel', (event) => {
+        if (window.scrollY < scrollScene.triggerPosition()) {
+            return true;
+        }
+        if (event.deltaY > 0 && currentSlide == slideNum-1) {
+            return true;
+        }
+        if (event.deltaY < 0 && currentSlide == 0) {
+            return true;
+        }
+        console.log("scrollDetect:", scrollDetect, "Y:", event.deltaY);
+
+
+        if (scrollDetect) {
+            var next = (event.deltaY > 0) ? currentSlide+1: currentSlide-1;
+            changeSlide(next);
+        }
+        event.preventDefault();
+        return false;
+    });
+
+    $slider.swipe({
+        swipeUp: (event) => {
+            console.log("swipeUp at", currentSlide);
+            if (currentSlide <4) {
+                changeSlide(currentSlide+1);
+            } else {
+                console.log("goto", scrollScene.triggerPosition()," ", scrollScene.duration(), window.innerHeight);
+                window.scroll(0, 14000, 'smooth');
+                //scrollController.scrollTo(scrollScene.triggerPosition() + scrollScene.duration() + window.innerHeight);
+            }
+        },
+        swipeDown: (event) => {
+            console.log("swipeDown at", currentSlide);
+            if (currentSlide>0) {
+                changeSlide(currentSlide-1);
+            } else {
+                console.log("goto", scrollScene.triggerPosition(), window.innerHeight);
+                window.scroll(0, scrollScene.triggerPosition() - window.innerHeight, 'smooth');
+            }
+        },
+        /*allowPageScroll: "none"*/
+    });
 
     function scrollSlider(options) {
 
@@ -218,18 +284,6 @@ function setNavStatus() {
 
         // Set dimensions
         setDimensions();
-        
-        // On resize
-
-        /*$(window).on( 'resize', function() {
-          clearTimeout(resizing);
-          resizing = setTimeout(function() {
-            progress = scrollTimeline.progress();
-            var axisY = window.scrollY;
-            setDimensions();
-            window.scrollTo(0, axisY);
-          }, 100); 
-        });*/
     }
 
     function setDimensions() {
@@ -241,69 +295,100 @@ function setNavStatus() {
         settings.sliderHeight = $firstSlide.outerHeight(true);
 
         // Set slider width and height
-        if (window.innerWidth<1024) {
-            $slides.css({"max-height":settings.slideHeight, "min-height": settings.slideHeight, "height": settings.slideHeight});
+        if (window.innerWidth < 1024) {
+            $slides.css({ "max-height": settings.slideHeight, "min-height": settings.slideHeight, "height": settings.slideHeight });
             $sliderWrapper.height(Math.ceil((settings.slideHeight * $slides.length)));
         } else {
             $sliderWrapper.width(settings.sliderWidth);
         }
-        
+
         // Set scene
         setScene();
     }
 
     function setScene() {
-        if (scrollScene != null && scrollTimeline != null) {
-            //progress = 0;
-            scrollScene.destroy(true);
-            //Create Tween
-            scrollTimeline = createScrollAnimation();
+        // Init ScrollMagic controller
+        scrollController = new ScrollMagic.Controller();
 
-            scrollTimeline.progress(progress);
+        //Create Tween
+        // Create scene to pin and link animation
+        var scrollTimeline = createScrollAnimation();
 
-            // Create scene to pin and link animation
-            var scrollDuration = (window.innerWidth > 1023) ? settings.sliderWidth: $firstSlide.height()*4;
-            scrollScene = new ScrollMagic.Scene({
-                triggerElement: settings.slider,
-                triggerHook: "onLeave",
-                duration: scrollDuration
-            })
+        var sceneDuration = 10000;
+        slidePos = [
+            50,
+            0.2*sceneDuration+50,
+            0.45*sceneDuration+50,
+            0.7*sceneDuration+50,
+            sceneDuration-50
+        ];
+
+        scrollScene = new ScrollMagic.Scene({
+            triggerElement: settings.slider,
+            triggerHook: "onLeave",
+            duration: sceneDuration
+        })
             .setPin(settings.slider)
             .setTween(scrollTimeline)
             .addTo(scrollController)
-            .on('start', function (event) {
-                scrollTimeline.time(0);
-            });
-            
-        } else {
-            // Init ScrollMagic controller
-            scrollController = new ScrollMagic.Controller();
-
-            //Create Tween
-            scrollTimeline = createScrollAnimation();
-
-            scrollTimeline.progress( progress );
-
-            // Create scene to pin and link animation
-            var scrollDuration = (window.innerWidth > 1023) ? settings.sliderWidth: $firstSlide.height()*4;
-            scrollScene = new ScrollMagic.Scene({
-                triggerElement: settings.slider,
-                triggerHook: "onLeave",
-                duration: scrollDuration
+            .on('progress', function (event) {
+                console.log("progress =", event.progress);
+                if (event.progress>=0   && event.progress<0.2) {
+                    currentSlide = 0;
+                }
+                if (event.progress>=0.2 && event.progress<0.4) {
+                    currentSlide = 1;
+                }
+                if (event.progress>=0.4 && event.progress<0.6) {
+                    currentSlide = 2;
+                }
+                if (event.progress>=0.6 && event.progress<0.8) {
+                    currentSlide = 3;
+                }
+                if (event.progress>=0.8 && event.progress<= 1) {
+                    currentSlide = 4;
+                }
             })
-            .setPin(settings.slider)
-            .setTween(scrollTimeline)
-            .addTo(scrollController)
             .on('start', function (event) {
-                scrollTimeline.time(0);
+                /*scrollTimeline.time(0);*/
             });
-        }
-        
     }
 
-    function createScrollAnimation () {
+    function changeSlide(index, direction) { // index = 1
+        console.log("change ", index);
+
+        scrollDetect = false;
+        currentSlide = index;
+        /*runAnimation(currentSlide);*/
+        setTimeout(() => {
+            scrollController.scrollTo(scrollScene.triggerPosition() + slidePos[currentSlide]);
+            setTimeout(() => {
+                console.log("scrollDetect true");
+                scrollDetect = true;
+            }, 100);
+        }, 200);
+    }
+
+    function runAnimation (index) {
+        TweenMax.to($sliderWrapper, switchTime, { x: -window.innerWidth * (index)});
+        TweenMax.to(".counter", switchTime, {
+            rotationX: 72 * index, transformOrigin: '50% 50% -100px'
+        })
+
+        var circleProgress = $("#progress .progress__circle");
+        var r = circleProgress.attr("r");
+        var c = Math.PI * r * 2;
+        TweenMax.to(".progress__circle", switchTime, { "stroke-dashoffset": c * (0.8 - 0.2 * index) });
+
+        var decoDots = $(".deco-dot ul li");
+        decoDots.each(function(dot_index) {
+            TweenMax.to($(this), { className:  dotClass[index][dot_index]});
+        })
+    }
+
+    function createScrollAnimation() {
         //Create Tween
-        scrollTimeline = new TimelineMax();
+        var scrollTimeline = new TimelineMax();
         var switchTiming = [];
         var switchTime = 1;
         // add slide
@@ -314,39 +399,22 @@ function setNavStatus() {
             scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*2}, 5);
             scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*3}, 10);
             scrollTimeline.to( $sliderWrapper, 5, { y: -slideMoveDistance*4}, 15);
-            scrollTimeline.to( $sliderWrapper, 2, {}, 19);
-
             switchTiming = [3, 8, 13, 18];
         } else { // pc
             var slideMoveDistance = $slides.width();
-            /*scrollTimeline.to( $sliderWrapper, 4, { x: -slideMoveDistance*2/5, ease: Power2.easeInOut }, 0);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*5/5, ease: Power2.easeInOut }, 4);
-            scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*7/5, ease: Power2.easeInOut }, 6);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*10/5, ease: Power2.easeInOut }, 9);
-            scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*12/5, ease: Power2.easeInOut }, 11);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*15/5, ease: Power2.easeInOut }, 14);
-            scrollTimeline.to( $sliderWrapper, 3, { x: -slideMoveDistance*17/5, ease: Power2.easeInOut }, 16);
-            scrollTimeline.to( $sliderWrapper, 2, { x: -slideMoveDistance*20/5, ease: Power2.easeInOut }, 19);*/
             scrollTimeline.to( $sliderWrapper, 5, { x: -slideMoveDistance*1}, 0);
             scrollTimeline.to( $sliderWrapper, 5, { x: -slideMoveDistance*2}, 5);
             scrollTimeline.to( $sliderWrapper, 5, { x: -slideMoveDistance*3}, 10);
             scrollTimeline.to( $sliderWrapper, 5, { x: -slideMoveDistance*4}, 15);
-            scrollTimeline.to( $sliderWrapper, 2, {}, 19);
-
-
-            //switchTiming = [3, 7.5, 11, 14.5];
-
             switchTiming = [3, 8, 13, 18];
         }
-        scrollTimeline.to( $sliderWrapper, 1, {})
-        
     
         // couting number
         var counter = $(".counter"),
         counterNumber = $(".counter").children();
         TweenMax.set(counter, {transformStyle:'preserve-3d'});
         $.each(counterNumber, function(index, element) {
-            TweenMax.to(element, 1, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
+            TweenMax.to(element, switchTime, {rotationX:(-72 * index), transformOrigin:'50% 50% -100px'});
         });
         for (let i=0; i<switchTiming.length; i++) {
             scrollTimeline.add(TweenMax.to(counter, switchTime, {
@@ -361,10 +429,10 @@ function setNavStatus() {
         var c = Math.PI*r*2;
         var circleTl = new TimelineMax({ paused: true });
         TweenMax.set(".progress__circle", {"stroke-dasharray": c, "stroke-dashoffset": c*0.8});
-        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.6}), switchTiming[0]);// 1->2
-        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.4}), switchTiming[1]);// 2->3
-        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": c*0.2}), switchTiming[2]);// 3->4
-        scrollTimeline.add(TweenMax.to(".progress__circle", 1, {"stroke-dashoffset": 0}),     switchTiming[3]);// 3->4
+        scrollTimeline.add(TweenMax.to(".progress__circle", switchTime, {"stroke-dashoffset": c*0.6}), switchTiming[0]);// 1->2
+        scrollTimeline.add(TweenMax.to(".progress__circle", switchTime, {"stroke-dashoffset": c*0.4}), switchTiming[1]);// 2->3
+        scrollTimeline.add(TweenMax.to(".progress__circle", switchTime, {"stroke-dashoffset": c*0.2}), switchTiming[2]);// 3->4
+        scrollTimeline.add(TweenMax.to(".progress__circle", switchTime, {"stroke-dashoffset": 0}),     switchTiming[3]);// 3->4
     
         // slide dot
         var decoDots = $(".deco-dot ul li");
@@ -374,32 +442,31 @@ function setNavStatus() {
         TweenMax.set(decoDots[3], {className:"bg-second"});
         TweenMax.set(decoDots[4], {className:"bg-second"});
     
-        scrollTimeline.add(TweenMax.to(decoDots[0], 1, {className: "bg-second"}),    switchTiming[0]); // 1->2
-        scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-emphasize"}), switchTiming[0]);
-        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-main"}),      switchTiming[0]);
+        scrollTimeline.add(TweenMax.to(decoDots[0], switchTime, {className: "bg-second"}),    switchTiming[0]); // 1->2
+        scrollTimeline.add(TweenMax.to(decoDots[1], switchTime, {className: "bg-emphasize"}), switchTiming[0]);
+        scrollTimeline.add(TweenMax.to(decoDots[2], switchTime, {className: "bg-main"}),      switchTiming[0]);
         
-        scrollTimeline.add(TweenMax.to(decoDots[1], 1, {className: "bg-second"}),    switchTiming[1]); // 2->3
-        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-emphasize"}), switchTiming[1]);
-        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-main"}),      switchTiming[1]);
+        scrollTimeline.add(TweenMax.to(decoDots[1], switchTime, {className: "bg-second"}),    switchTiming[1]); // 2->3
+        scrollTimeline.add(TweenMax.to(decoDots[2], switchTime, {className: "bg-emphasize"}), switchTiming[1]);
+        scrollTimeline.add(TweenMax.to(decoDots[3], switchTime, {className: "bg-main"}),      switchTiming[1]);
     
-        scrollTimeline.add(TweenMax.to(decoDots[2], 1, {className: "bg-second"}),    switchTiming[2]); // 3->4
-        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-emphasize"}), switchTiming[2]);
-        scrollTimeline.add(TweenMax.to(decoDots[4], 1, {className: "bg-main"}),      switchTiming[2]);
+        scrollTimeline.add(TweenMax.to(decoDots[2], switchTime, {className: "bg-second"}),    switchTiming[2]); // 3->4
+        scrollTimeline.add(TweenMax.to(decoDots[3], switchTime, {className: "bg-emphasize"}), switchTiming[2]);
+        scrollTimeline.add(TweenMax.to(decoDots[4], switchTime, {className: "bg-main"}),      switchTiming[2]);
     
-        scrollTimeline.add(TweenMax.to(decoDots[3], 1, {className: "bg-second"}),    switchTiming[3]); // 4->5
+        scrollTimeline.add(TweenMax.to(decoDots[3], switchTime, {className: "bg-second"}),    switchTiming[3]); // 4->5
 
         return scrollTimeline;
     }
-    
-    $(document).ready(function() {
-        scrollSlider(); 
+
+    $(document).ready(function () {
+        scrollSlider();
     });
 
-
     let urlParams = new URLSearchParams(window.location.search);
-    if(urlParams.has('test')) {
+    if (urlParams.has('test')) {
         var debug = $("#debug");
-        debug.css({position:"fixed", top: "100px", left: 0, "z-index":99});
+        debug.css({ position: "fixed", top: "100px", left: 0, "z-index": 99 });
         var sh = $slides.height();
         var vh = window.innerHeight;
         debug.html(sh + " " + vh);
@@ -410,6 +477,6 @@ function setNavStatus() {
             $("#debug").html(sh + " " + vh);
         })
     }
-    
+
 })(jQuery);
 
