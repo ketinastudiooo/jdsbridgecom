@@ -406,7 +406,7 @@ function setNavStatus() {
                     }
 
                     console.log("progress =", event.progress, event.scrollDirection, "currentSlide =", currentSlide, scrollController.scrollPos());
-                }, 200);
+                }, 100);
                 
                 /*if (currentSlide != currentScroll) {
                     changeSlide(currentScroll);
@@ -428,13 +428,14 @@ function setNavStatus() {
         scrollDetect = false;
         currentSlide = index;
         runAnimation(currentSlide);
-        setTimeout(() => {
+        scrollController.scrollTo(slidePos[currentSlide]);
+        /*setTimeout(() => {
             scrollController.scrollTo(slidePos[currentSlide]);
             setTimeout(() => {
                 console.log("scrollDetect true");
                 scrollDetect = true;
             }, 100);
-        }, 200);
+        }, 200);*/
     }
 
     function runAnimation (index) {
