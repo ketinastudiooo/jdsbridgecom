@@ -21,10 +21,10 @@ const pizzaDots = document.querySelectorAll("#product-show .deco-dot li");
 let lastIpdateCompoundItem;
 function next() {
     compoundList.scrollLeft += document.querySelector("#compound .slick-container .item-list .item").clientWidth;
-
-    if (lastIpdateCompoundItem) {
+    console.log(lastIpdateCompoundItem);
+    /*if (lastIpdateCompoundItem) {
         clearTimeout(lastIpdateCompoundItem);
-    }
+    }*/
 
     setTimeout(() => {
         compoundList.append(compoundList.children[0]);
@@ -36,14 +36,13 @@ function next() {
 function previous() {
     compoundList.scrollLeft -= document.querySelector("#compound .slick-container .item-list .item").clientWidth;
 
-    if (lastIpdateCompoundItem) {
+    /*if (lastIpdateCompoundItem) {
         clearTimeout(lastIpdateCompoundItem);
-    }
+    }*/
 
     setTimeout(() => {
         compoundList.prepend(compoundList.children[compoundList.children.length - 1]);
     }, 400);
-
     // or gsap
 }
 
