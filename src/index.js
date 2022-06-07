@@ -188,7 +188,7 @@ function setNavStatus() {
 
 // 箭頭動畫間隔
 var arrow = $("#arrow");
-var interval = 3000;
+var interval = 1100;
 
 setInterval(function() { // loop the function (the delay)
   arrow.removeClass("arrow-animation"); // remove the existing animation. used to reset the animation

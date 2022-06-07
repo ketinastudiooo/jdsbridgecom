@@ -2107,7 +2107,7 @@ nav li:hover, nav li:active {
 #arrow {
   margin-left: 300px;
   animation-iteration-count: 1;
-	animation-duration: 1500ms;
+	animation-duration: 800ms;
   animation-fill-mode: forwards;
 	animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
   
