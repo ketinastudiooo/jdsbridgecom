@@ -2101,3 +2101,39 @@ nav li:hover, nav li:active {
   stroke: #3279CE;
   fill: transparent;
 }
+
+#arrow {
+  margin-left: 300px;
+  animation-iteration-count: 1;
+	animation-duration: 1500ms;
+  animation-fill-mode: forwards;
+	animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+  
+  transform: scaleX(0) translateX(100%);
+  clip-path: inset(0 0 0 100%);
+	transform-origin: 0 50%;
+  
+}
+.arrow-animation {
+  animation-name: revealer-text;
+}
+@keyframes revealer-text {
+	
+	0%, 50% {
+		transform-origin: right center;
+	}
+	
+	60%, 100% {
+		transform-origin: left center;		
+	}
+  
+	60% {
+		transform: scaleX(1) translateX(0);
+    clip-path: inset(0 0 0 0);
+	}
+	
+	100% {
+		transform: scaleX(1);
+    clip-path: inset(0 100% 0 0);
+	}
+}

@@ -141,7 +141,7 @@ gsap.to("#products .parallax-refactor .image", {
     }
 });
 
-// 進來的overlay 3秒
+// 進來的overlay 1秒
 setTimeout(() => {
     $(".loading-animation").fadeOut("slow", () => {
         $("body").removeClass("overflow-hidden");
@@ -185,6 +185,18 @@ function setNavStatus() {
         });
     }
 }
+
+// 箭頭動畫間隔
+var arrow = $("#arrow");
+var interval = 3000;
+
+setInterval(function() { // loop the function (the delay)
+  arrow.removeClass("arrow-animation"); // remove the existing animation. used to reset the animation
+  setTimeout(function() { // using setTimeout to create the delay.
+    arrow.addClass("arrow-animation"); // add the animation class, to start animation
+  })
+}, interval);
+
 
 // horizontal slider
 !(function($) {
