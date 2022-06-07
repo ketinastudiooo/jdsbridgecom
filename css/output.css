@@ -1692,6 +1692,8 @@ nav li:hover, nav li:active {
   }
 
   .item-list .inner-wrap {
+    max-width: 280px;
+    max-height: 360px;
     height: 25.8vw !important;
     width: 19.4vw !important;
   }
