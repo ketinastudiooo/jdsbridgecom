@@ -250,6 +250,15 @@ function setNavStatus() {
         }
     })
 
+    $(window).on( 'resize', function() {
+        console.log("resize");
+        if (window.scrollY >= scrollScene.triggerPosition() && window.scrollY <= scrollScene.triggerPosition()+scrollScene.duration()) {
+            console.log("runAnimation");
+            runAnimation(currentSlide);
+        }
+    });
+
+
     function scrollSlider(options) {
         // Default
         settings = $.extend({
@@ -314,7 +323,7 @@ function setNavStatus() {
         if (isMobile) {
             scrollScene
                 .on('start', function (event) {
-                    if (event.scrollDirection == "FORWARD") {
+                    if (event.scrollDirection == "FORWARD") { // 進slide
                         console.log("start forward");
                         $slides.first().swipe('option', 'allowPageScroll', 'auto');
                     } else if (event.scrollDirection == "REVERSE") {
@@ -323,7 +332,7 @@ function setNavStatus() {
                     }
                 })
                 .on('end', function (event) {
-                    if (event.scrollDirection == "FORWARD") {
+                    if (event.scrollDirection == "FORWARD") { // 離開slide
                         console.log("end forward");
                         $slides.last().swipe('option', 'allowPageScroll', 'vertical');
                     } else if (event.scrollDirection == "REVERSE") {
