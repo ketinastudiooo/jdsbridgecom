@@ -206,6 +206,7 @@ function setNavStatus() {
     // 控制滑鼠滾輪
     var ss = document.querySelector(".scroll-slider")
 
+    // 手機版滑動
     $slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
@@ -269,7 +270,7 @@ function setNavStatus() {
 
         // Set slider width and height
         if (window.innerWidth < 1024) {
-            $slides.css({ "max-height": settings.slideHeight, "min-height": settings.slideHeight, "height": settings.slideHeight });
+            //$slides.css({ "max-height": settings.slideHeight, "min-height": settings.slideHeight, "height": settings.slideHeight });
             $sliderWrapper.height(Math.ceil((settings.slideHeight * $slides.length)));
         } else {
             $sliderWrapper.width(settings.sliderWidth);
