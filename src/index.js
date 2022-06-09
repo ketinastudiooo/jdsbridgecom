@@ -207,71 +207,25 @@ function setNavStatus() {
     var ss = document.querySelector(".scroll-slider")
 
     // 手機版滑動
-    /*$slides.each(function (index) {
-        if (index == 0) {
-            $(this).swipe({
-                swipeUp: (event) => {
-                    console.log("swipeUp at", currentSlide);
-                    if (window.scrollY < Math.ceil(scrollScene.triggerPosition())) {
-                        console.log("not reach product");
-                        scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition()));
-                    } else {
-                        changeSlide(1);
-                    }
-                },
-                allowPageScroll: "vertical"
-            });
-        } else if (index == 4) {
-            $(this).swipe({
-                swipeDown: (event) => {
-                    console.log("swipeDown at", currentSlide, window.scrollY, Math.floor(scrollScene.triggerPosition()+scrollScene.duration()));
-                    if (window.scrollY > Math.floor(scrollScene.triggerPosition()+scrollScene.duration())) {
-                        console.log("not reach product");
-                        scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition()));
-                    } else {
-                        changeSlide(3);
-                    }
-                },
-                allowPageScroll: "auto"
-            });
-        } else {
-            $(this).swipe({
-                swipeUp: (event) => {
-                    console.log("swipeUp at", currentSlide);
-                    changeSlide(index+1)
-                },
-                swipeDown: (event) => {
-                    console.log("swipeDown at", currentSlide);
-                    changeSlide(currentSlide - 1);
-                },
-                allowPageScroll: "auto"
-            });
-        }
-    })*/
     $slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
                 OnMove: function (detail) {
                     var d = detail.direction;
-                    console.log("OnMove:", detail.direction);
                     if (d === 'u' && window.scrollY > Math.ceil(scrollScene.triggerPosition())) {
                         return true;
                     }
                 },
                 OnSwipe: function (detail) {
                     if (detail.direction == "u") {
-                        console.log("swipeUp at", currentSlide);
                         changeSlide(1);
                     }
-
-                    console.log(detail);
-                    $("#debug").html(detail.direction);
                 }
             });
         } else if (index == 4) {
             $(this).swipe({
                 OnMove: function (detail) {
-                    if (/*detail.direction == "d" &&*/ window.scrollY < Math.floor(scrollScene.triggerPosition()+scrollScene.duration())) {
+                    if (detail.direction == "d" && window.scrollY < Math.floor(scrollScene.triggerPosition()+scrollScene.duration())) {
                         return true;
                     }
                 },
@@ -279,11 +233,9 @@ function setNavStatus() {
                     if (detail.direction == "d") {
                         changeSlide(index-1);
                     } else if (detail.direction == "u") {
-                        console.log("scroll to ", Math.ceil(scrollScene.triggerPosition())+scrollScene.duration()+1);
-                        scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition())+scrollScene.duration()+1);
+                        /*scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition())+scrollScene.duration()+1);*/
+                        //scrollScene.removePin(true);
                     }
-                    console.log(detail);
-                    $("#debug").html(detail.direction);
                 }
             });
         } else {
@@ -297,8 +249,6 @@ function setNavStatus() {
                     } else if (detail.direction == "d") {
                         changeSlide(index-1);
                     }
-                    console.log(detail);
-                    $("#debug").html(detail.direction);
                 }
             });
         }
