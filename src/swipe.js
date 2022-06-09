@@ -56,21 +56,35 @@
             };
 
             var mouseMove = function (e) {
+                var x = e.pageX - curX;
+                var y = e.pageY - curY;
+                var direction = null;
+                if (x >= 0) {
+                    direction = 'r';
+                } else {
+                    direction = 'l';
+                }
+                if (y >= 0) {
+                    direction = 'd';
+                }   else {
+                    direction = 'u';
+                }
 
                 if (mdown) {
                     det = {
+                        direction: direction,
                         diffx: e.pageX - curX,
                         diffy: e.pageY - curY,
                         client: { x: e.clientX, y: e.clientY },
                         page: { x: e.pageX, y: e.pageY },
                         screen: { x: e.screenX, y: e.screenY }
                     };
-                    obj.OnMove(det);
+                    var result = obj.OnMove(det);
 
                     curX = e.pageX;
                     curY = e.pageY;
                 }
-                if (obj.PreventDefault) {
+                if (obj.PreventDefault && result) {
                     e.preventDefault();
                 }
             };
@@ -113,20 +127,36 @@
             };
 
             var touchMove = function (event) {
-
                 if (event.targetTouches.length > 1) { return; }
-                det = { diffx: event.targetTouches[0].pageX - curX, diffy: event.targetTouches[0].pageY - curY,
+                var x = event.targetTouches[0].pageX - curX;
+                var y = event.targetTouches[0].pageY - curY;
+                var direction = null;
+                if (x >= 0) {
+                    direction = 'r';
+                } else {
+                    direction = 'l';
+                }
+                if (y >= 0) {
+                    direction = 'd';
+                }   else {
+                    direction = 'u';
+                }
+
+                det = {
+                    direction: direction,
+                    diffx: event.targetTouches[0].pageX - curX, 
+                    diffy: event.targetTouches[0].pageY - curY,
                     client: { x: event.targetTouches[0].clientX, y: event.targetTouches[0].clientY },
                     page: { x: event.targetTouches[0].pageX, y: event.targetTouches[0].pageY },
                     screen: { x: event.targetTouches[0].screenX, y: event.targetTouches[0].screenY },
                     evt : event
                 };
-                obj.OnMove(det);
+                var result = obj.OnMove(det);
 
                 curX = event.targetTouches[0].pageX;
                 curY = event.targetTouches[0].pageY;
 
-                if (obj.PreventDefault) {
+                if (obj.PreventDefault && result) {
                     event.preventDefault();
                 }
             };

@@ -249,12 +249,28 @@ function setNavStatus() {
         }
     })*/
     $slides.each(function (index) {
-        $(this).swipe({
-            OnSwipe: function (detail) {
-                console.log(detail);
-                $("#debug").html(detail.direction);
-            }
-        });
+        if (index == 0) {
+            $(this).swipe({
+                OnMove: function (detail) {
+                    var d = detail.direction;
+                    console.log("OnMove:", detail.direction);
+                    if (d === 'u' && window.scrollY > Math.ceil(scrollScene.triggerPosition())) {
+                        return true;
+                    }
+                },
+                OnSwipe: function (detail) {
+                    if (detail.direction == "u") {
+                        console.log("swipeUp at", currentSlide);
+                        changeSlide(1);
+                    }
+
+                    
+                    console.log(detail);
+                    $("#debug").html(detail.direction);
+                }
+            });
+        }
+        
     })
 
 
