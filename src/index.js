@@ -207,7 +207,7 @@ function setNavStatus() {
     var ss = document.querySelector(".scroll-slider")
 
     // 手機版滑動
-    $slides.each(function (index) {
+    /*$slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
                 swipeUp: (event) => {
@@ -247,8 +247,8 @@ function setNavStatus() {
                 allowPageScroll: "auto"
             });
         }
-    })
-    /*$slides.each(function (index) {
+    })*/
+    $slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
                 OnMove: function (detail) {
@@ -264,7 +264,24 @@ function setNavStatus() {
                         changeSlide(1);
                     }
 
-                    
+                    console.log(detail);
+                    $("#debug").html(detail.direction);
+                }
+            });
+        } else if (index == 4) {
+            $(this).swipe({
+                OnMove: function (detail) {
+                    if (/*detail.direction == "d" &&*/ window.scrollY < Math.floor(scrollScene.triggerPosition()+scrollScene.duration())) {
+                        return true;
+                    }
+                },
+                OnSwipe: function (detail) {
+                    if (detail.direction == "d") {
+                        changeSlide(index-1);
+                    } else if (detail.direction == "u") {
+                        console.log("scroll to ", Math.ceil(scrollScene.triggerPosition())+scrollScene.duration()+1);
+                        scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition())+scrollScene.duration()+1);
+                    }
                     console.log(detail);
                     $("#debug").html(detail.direction);
                 }
@@ -272,14 +289,20 @@ function setNavStatus() {
         } else {
             $(this).swipe({
                 OnMove: function (detail) {
+                    return true;
                 },
                 OnSwipe: function (detail) {
+                    if (detail.direction == "u") {
+                        changeSlide(index+1);
+                    } else if (detail.direction == "d") {
+                        changeSlide(index-1);
+                    }
                     console.log(detail);
                     $("#debug").html(detail.direction);
                 }
             });
         }
-    })*/
+    })
 
 
     var resizeAnimeTimeout = null;
