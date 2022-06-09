@@ -250,11 +250,16 @@ function setNavStatus() {
         }
     })
 
+
+    var resizeAnimeTimeout = null;
     $(window).on( 'resize', function() {
         console.log("resize");
         if (window.scrollY >= scrollScene.triggerPosition() && window.scrollY <= scrollScene.triggerPosition()+scrollScene.duration()) {
-            console.log("runAnimation");
-            runAnimation(currentSlide);
+            clearTimeout(resizeAnimeTimeout);
+            resizeAnimeTimeout = setTimeout(function () {
+                console.log("runAnimation");
+                runAnimation(currentSlide);
+            }, 100);
         }
     });
 
