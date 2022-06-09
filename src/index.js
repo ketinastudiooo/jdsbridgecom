@@ -207,7 +207,7 @@ function setNavStatus() {
     var ss = document.querySelector(".scroll-slider")
 
     // 手機版滑動
-    /*$slides.each(function (index) {
+    $slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
                 swipeUp: (event) => {
@@ -247,8 +247,8 @@ function setNavStatus() {
                 allowPageScroll: "auto"
             });
         }
-    })*/
-    $slides.each(function (index) {
+    })
+    /*$slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
                 OnMove: function (detail) {
@@ -269,9 +269,17 @@ function setNavStatus() {
                     $("#debug").html(detail.direction);
                 }
             });
+        } else {
+            $(this).swipe({
+                OnMove: function (detail) {
+                },
+                OnSwipe: function (detail) {
+                    console.log(detail);
+                    $("#debug").html(detail.direction);
+                }
+            });
         }
-        
-    })
+    })*/
 
 
     var resizeAnimeTimeout = null;
