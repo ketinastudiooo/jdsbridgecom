@@ -285,7 +285,7 @@ function setNavStatus() {
         // Set slider width and height
         if (window.innerWidth < 1024) {
             //$slides.css({ "max-height": settings.slideHeight, "min-height": settings.slideHeight, "height": settings.slideHeight });
-            $sliderWrapper.height(Math.ceil((settings.slideHeight * $slides.length)));
+            //$sliderWrapper.height(Math.ceil((settings.slideHeight * $slides.length)));
         } else {
             $sliderWrapper.width(settings.sliderWidth);
         }
@@ -421,7 +421,8 @@ function setNavStatus() {
     function runAnimation(index) {
         var slideDist = 0;
         if (window.innerWidth < 1024) {
-            slideDist = window.innerHeight;
+            slideDist = $slides.height();
+            console.log("slideDist =", slideDist);
             TweenMax.to($sliderWrapper, switchTime, { y: -slideDist * (index) });
         } else {
             slideDist = window.innerWidth;
