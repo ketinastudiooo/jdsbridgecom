@@ -2111,3 +2111,10 @@ nav li:hover, nav li:active {
   stroke: #3279CE;
   fill: transparent;
 }
+
+#debug { 
+  position: fixed;
+  top: 100px;
+  left: 0;
+  z-index: 99;
+}

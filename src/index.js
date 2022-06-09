@@ -207,7 +207,7 @@ function setNavStatus() {
     var ss = document.querySelector(".scroll-slider")
 
     // 手機版滑動
-    $slides.each(function (index) {
+    /*$slides.each(function (index) {
         if (index == 0) {
             $(this).swipe({
                 swipeUp: (event) => {
@@ -227,7 +227,6 @@ function setNavStatus() {
                     console.log("swipeDown at", currentSlide, window.scrollY, Math.floor(scrollScene.triggerPosition()+scrollScene.duration()));
                     if (window.scrollY > Math.floor(scrollScene.triggerPosition()+scrollScene.duration())) {
                         console.log("not reach product");
-                        //scrollController.scrollTo(Math.floor(scrollScene.triggerPosition()+scrollScene.duration())-window.innerHeight);
                         scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition()));
                     } else {
                         changeSlide(3);
@@ -248,6 +247,14 @@ function setNavStatus() {
                 allowPageScroll: "auto"
             });
         }
+    })*/
+    $slides.each(function (index) {
+        $(this).swipe({
+            OnSwipe: function (detail) {
+                console.log(detail);
+                $("#debug").html(detail.direction);
+            }
+        });
     })
 
 
