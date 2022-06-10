@@ -250,7 +250,7 @@ function setNavStatus() {
         createScrollAnimation();
 
 
-        var slideDuration = (window.innerWidth < 1024) ? 2000 : 500;
+        var slideDuration = (window.innerWidth < 1024) ? 1000 : 500;
         var sceneDuration = slideDuration * 5;
         console.log(sceneDuration);
 
@@ -279,8 +279,6 @@ function setNavStatus() {
         for (let i = 0; i < 5; i++) {
             slidePos[i] = Math.ceil(scrollScene.triggerPosition()) + slidePos[i];
         }
-        slidePos[0] += 10;
-        slidePos[4] -= 10;
         console.log(slidePos);
     }
 
