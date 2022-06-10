@@ -176,21 +176,6 @@ function setNavStatus() {
 
     'use strict';
 
-    let urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('test')) {
-        var debug = $("#debug");
-        debug.css({ position: "fixed", top: "100px", left: 0, "z-index": 99 });
-        var sh = $slides.height();
-        var vh = window.innerHeight;
-        debug.html(sh + " " + vh);
-
-        document.addEventListener("scroll", () => {
-            sh = $slides.height();
-            vh = window.innerHeight;
-            $("#debug").html(sh + " " + vh);
-        })
-    }
-
     var isMobile = (window.innerWidth < 1024);
 
     var $slider = $('.scroll-slider'),
@@ -217,6 +202,24 @@ function setNavStatus() {
         ['bg-second', 'bg-second', 'bg-second', 'bg-emphasize', 'bg-main'],
         ['bg-second', 'bg-second', 'bg-second', 'bg-second', 'bg-main'],
     ];
+
+
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('test')) {
+        var debug = $("#debug");
+        debug.css({ position: "fixed", top: "100px", left: 0, "z-index": 99 });
+        var sh = $slides.height();
+        var vh = window.innerHeight;
+        debug.html(sh + " " + vh);
+
+        document.addEventListener("scroll", () => {
+            sh = $slides.height();
+            vh = window.innerHeight;
+            $("#debug").html(sh + " " + vh);
+        })
+    }
+
+
 
     var resizeAnimeTimeout = null;
     $(window).on( 'resize', function() {
