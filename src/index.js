@@ -250,7 +250,7 @@ function setNavStatus() {
         createScrollAnimation();
 
 
-        var slideDuration = (window.innerWidth < 1024) ? 1000 : 500;
+        var slideDuration = (window.innerWidth < 1024) ? 1000 : 2000;
         var sceneDuration = slideDuration * 5;
         console.log(sceneDuration);
 
