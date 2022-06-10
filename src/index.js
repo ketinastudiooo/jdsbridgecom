@@ -203,58 +203,6 @@ function setNavStatus() {
         ['bg-second', 'bg-second', 'bg-second', 'bg-second', 'bg-main'],
     ];
 
-    // 控制滑鼠滾輪
-    var ss = document.querySelector(".scroll-slider")
-
-    // 手機版滑動
-    $slides.each(function (index) {
-        if (index == 0) {
-            $(this).swipe({
-                OnMove: function (detail) {
-                    var d = detail.direction;
-                    if (d === 'u' && window.scrollY > Math.ceil(scrollScene.triggerPosition())) {
-                        return true;
-                    }
-                },
-                OnSwipe: function (detail) {
-                    if (detail.direction == "u") {
-                        changeSlide(1);
-                    }
-                }
-            });
-        } else if (index == 4) {
-            $(this).swipe({
-                OnMove: function (detail) {
-                    if (detail.direction == "d" && window.scrollY < Math.floor(scrollScene.triggerPosition()+scrollScene.duration())) {
-                        return true;
-                    }
-                },
-                OnSwipe: function (detail) {
-                    if (detail.direction == "d") {
-                        changeSlide(index-1);
-                    } else if (detail.direction == "u") {
-                        /*scrollController.scrollTo(Math.ceil(scrollScene.triggerPosition())+scrollScene.duration()+1);*/
-                        //scrollScene.removePin(true);
-                    }
-                }
-            });
-        } else {
-            $(this).swipe({
-                OnMove: function (detail) {
-                    return true;
-                },
-                OnSwipe: function (detail) {
-                    if (detail.direction == "u") {
-                        changeSlide(index+1);
-                    } else if (detail.direction == "d") {
-                        changeSlide(index-1);
-                    }
-                }
-            });
-        }
-    })
-
-
     var resizeAnimeTimeout = null;
     $(window).on( 'resize', function() {
         console.log("resize");
@@ -266,7 +214,6 @@ function setNavStatus() {
             }, 100);
         }
     });
-
 
     function scrollSlider(options) {
         // Default
@@ -304,7 +251,7 @@ function setNavStatus() {
 
 
         var slideDuration = (window.innerWidth < 1024) ? 2000 : 500;
-        var sceneDuration = slideDuration * 4;
+        var sceneDuration = slideDuration * 5;
         console.log(sceneDuration);
 
         slidePos = [
@@ -323,9 +270,9 @@ function setNavStatus() {
             .setPin(settings.slider)
             .addTo(scrollController)
             .on('progress', function (event) {
-                if (window.innerWidth >= 1024) {
+                //if (window.innerWidth >= 1024) {
                     progressAction(event);
-                }
+                //}
             })
 
 
@@ -362,57 +309,22 @@ function setNavStatus() {
     }
 
     function progressAction(event) {
-        clearTimeout(progressTimeout);
-        progressTimeout = setTimeout(() => {
-            scrollY = scrollController.scrollPos();
-            if (scrollY < slidePos[0]) {
-                currentSlide = 0;
-                runAnimation(0);
-                console.log("anime 0");
-            }
-            if (scrollY == slidePos[0] && currentSlide != 0) {
-                changeSlide(0);
-            }
-            if (scrollY > slidePos[0] && scrollY < slidePos[1]) {
-                if (event.scrollDirection == "FORWARD") {
-                    changeSlide(1);
-                } else if (event.scrollDirection == "REVERSE") {
-                    changeSlide(0)
-                }
-            }
-            if (scrollY == slidePos[1] && currentSlide != 1) changeSlide(1);
-            if (scrollY > slidePos[1] && scrollY < slidePos[2]) {
-                if (event.scrollDirection == "FORWARD") {
-                    changeSlide(2);
-                } else if (event.scrollDirection == "REVERSE") {
-                    changeSlide(1)
-                }
-            }
-            if (scrollY == slidePos[2] && currentSlide != 2) changeSlide(2);
-            if (scrollY > slidePos[2] && scrollY < slidePos[3]) {
-                if (event.scrollDirection == "FORWARD") {
-                    changeSlide(3);
-                } else if (event.scrollDirection == "REVERSE") {
-                    changeSlide(2)
-                }
-            }
-            if (scrollY == slidePos[3] && currentSlide != 3) changeSlide(3);
-            if (scrollY > slidePos[3] && scrollY < slidePos[4]) {
-                if (event.scrollDirection == "FORWARD") {
-                    changeSlide(4);
-                } else if (event.scrollDirection == "REVERSE") {
-                    changeSlide(3)
-                }
-            }
-            if (scrollY == slidePos[4] && currentSlide != 4) changeSlide(4);
-            if (scrollY > slidePos[4]) {
-                currentSlide = 4;
-                runAnimation(4);
-                console.log("anime4");
-            }
-
-            console.log("progress =", event.progress, event.scrollDirection, "currentSlide =", currentSlide, scrollController.scrollPos());
-        }, 100);
+        scrollY = scrollController.scrollPos();
+        if (scrollY >= slidePos[0] &&  scrollY< slidePos[1] && currentSlide!=0) {
+            changeSlide(0);
+        }
+        if (scrollY >= slidePos[1] &&  scrollY< slidePos[2] && currentSlide!=1) {
+            changeSlide(1);
+        }
+        if (scrollY >= slidePos[2] &&  scrollY< slidePos[3] && currentSlide!=2) {
+            changeSlide(2);
+        }
+        if (scrollY >= slidePos[3] &&  scrollY< slidePos[4] && currentSlide!=3) {
+            changeSlide(3);
+        }
+        if (scrollY >= slidePos[4] &&  scrollY< slidePos[4]+scrollScene.duration()/5 && currentSlide!=4) {
+            changeSlide(4);
+        }
     }
 
     function changeSlide(index) { // index = 1
