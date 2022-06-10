@@ -270,33 +270,9 @@ function setNavStatus() {
             .setPin(settings.slider)
             .addTo(scrollController)
             .on('progress', function (event) {
-                //if (window.innerWidth >= 1024) {
-                    progressAction(event);
-                //}
+                progressAction(event);
             })
 
-
-        if (isMobile) {
-            scrollScene
-                .on('start', function (event) {
-                    if (event.scrollDirection == "FORWARD") { // 進slide
-                        console.log("start forward");
-                        $slides.first().swipe('option', 'allowPageScroll', 'auto');
-                    } else if (event.scrollDirection == "REVERSE") {
-                        console.log("start reverse");
-                        $slides.first().swipe('option', 'allowPageScroll', 'vertical');
-                    }
-                })
-                .on('end', function (event) {
-                    if (event.scrollDirection == "FORWARD") { // 離開slide
-                        console.log("end forward");
-                        $slides.last().swipe('option', 'allowPageScroll', 'vertical');
-                    } else if (event.scrollDirection == "REVERSE") {
-                        console.log("end reverse");
-                        $slides.last().swipe('option', 'allowPageScroll', 'auto');
-                    }
-                })
-        }
 
 
         console.log("triggerPosition =", scrollScene.triggerPosition());
@@ -328,10 +304,10 @@ function setNavStatus() {
     }
 
     function changeSlide(index) { // index = 1
-        console.log("change ", index);
+        console.log("change to ", index);
         currentSlide = index;
         runAnimation(currentSlide);
-        scrollController.scrollTo(slidePos[currentSlide]);
+        /*scrollController.scrollTo(slidePos[currentSlide]+10);*/
     }
 
     function runAnimation(index) {
