@@ -266,7 +266,7 @@ function setNavStatus() {
 
         var desktopSpeed = 2000;
         if (urlParams.has('slidespeed')) {
-            desktopSpeed = parseInt(searchParams.get('slidespeed'));
+            desktopSpeed = parseInt(urlParams.get('slidespeed'));
         }
 
         var slideDuration = (window.innerWidth < 1280) ? 1000 : desktopSpeed;
