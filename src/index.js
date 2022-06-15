@@ -1,14 +1,25 @@
+const mobile_icon = document.getElementById("mobile-icon");
+const mobile_menu = document.getElementById("mobile-menu");
+// hamburgers 三條線
+const hamburgers = document.querySelectorAll("#mobile-icon .button-hamburger div");
+
+const navBar = document.querySelector("nav");
+const sections = document.querySelectorAll("section");
+const navLi = document.querySelectorAll("nav .container ul li");
+
+const compoundList = document.querySelector("#compound .slick-container .item-list");
+const pizzaNumber = document.querySelector("#product-show .now");
+const pizzaDots = document.querySelectorAll("#product-show .deco-dot li");
+
+
+// 建立locomotive + scrollmagic的環境
 gsap.registerPlugin(ScrollTrigger);
-
 const pageContainer = document.querySelector("#page-container");
-
 const scroller = new LocomotiveScroll({
     el: pageContainer,
     smooth: true
 });
-
 scroller.on("scroll", ScrollTrigger.update);
-
 ScrollTrigger.scrollerProxy(pageContainer, {
     scrollTop(value) {
         return arguments.length
@@ -25,11 +36,10 @@ ScrollTrigger.scrollerProxy(pageContainer, {
     },
     pinType: pageContainer.style.transform ? "transform" : "fixed"
 });
-
 ScrollTrigger.defaults({ scroller: pageContainer });
 
-// header navigation
-var navTrigger = ScrollTrigger.create({
+// header navigation backgroundcolor and size
+ScrollTrigger.create({
     start: 0,
     end: 30,
     onLeave: ({progress, direction, isActive}) => {
@@ -46,44 +56,52 @@ var navTrigger = ScrollTrigger.create({
     }
 });
 
+// Current Section Menu Item Active
+sections.forEach((section) => {
+    let sectionId = section.getAttribute("id");
+    ScrollTrigger.create({
+        trigger: section,
+        start: "top 70",
+        end: "bottom top",
+        onEnter: (self) => {
+            navLi.forEach((li) => {
+                li.classList.remove("active");
+                if (li.classList.contains(sectionId)) {
+                    li.classList.add("active");
+                }
+            });
+        },
+        onEnterBack: (self) => {
+            navLi.forEach((li) => {
+                li.classList.remove("active");
+                if (li.classList.contains(sectionId)) {
+                    li.classList.add("active");
+                }
+            });
+        }
+    });
+});
+
 const pizzaDotStyle = {
     target: "bg-emphasize",
     secondary: "bg-main",
     normal: "bg-second"
 }
 
-const mobile_icon = document.getElementById("mobile-icon");
-const mobile_menu = document.getElementById("mobile-menu");
-// hamburgers 三條線
-const hamburgers = document.querySelectorAll("#mobile-icon .button-hamburger div");
-
-const navBar = document.querySelector("nav");
-const sections = document.querySelectorAll("section.section_item");
-const navLi = document.querySelectorAll("nav .container ul li");
-
-const compoundList = document.querySelector("#compound .slick-container .item-list");
-/*const pizzaBox = document.querySelector("#product-show .product-box");*/
-const pizzaNumber = document.querySelector("#product-show .now");
-const pizzaDots = document.querySelectorAll("#product-show .deco-dot li");
 
 let lastIpdateCompoundItem;
 function next() {
     compoundList.scrollLeft += document.querySelector("#compound .slick-container .item-list .item").clientWidth;
-
     setTimeout(() => {
         compoundList.append(compoundList.children[0]);
     }, 400);
-
-    // or gsap
 }
 
 function previous() {
     compoundList.scrollLeft -= document.querySelector("#compound .slick-container .item-list .item").clientWidth;
-
     setTimeout(() => {
         compoundList.prepend(compoundList.children[compoundList.children.length - 1]);
     }, 400);
-    // or gsap
 }
 
 function setPizzaDot(index) {
@@ -188,25 +206,6 @@ setTimeout(() => {
     });
 }, 1000);
 
-document.addEventListener("scroll", () => {
-    setNavStatus();
-
-    let current = "";
-    sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (window.scrollY >= sectionTop - document.querySelector("nav").clientHeight) {
-            current = section.getAttribute("id");
-        }
-    });
-
-    navLi.forEach((li) => {
-        li.classList.remove("active");
-        if (li.classList.contains(current)) {
-            li.classList.add("active");
-        }
-    });
-});
-
 
 // 箭頭動畫間隔
 var arrow = $("#arrow");
@@ -251,18 +250,6 @@ setInterval(function () { // loop the function (the delay)
 
         // Set dimensions
         setDimensions();
-
-        // On resize
-
-        /*$(window).on( 'resize', function() {
-          clearTimeout(resizing);
-          resizing = setTimeout(function() {
-            progress = scrollTimeline.progress();
-            var axisY = window.scrollY;
-            setDimensions();
-            window.scrollTo(0, axisY);
-          }, 100); 
-        });*/
     }
 
     function setDimensions() {
