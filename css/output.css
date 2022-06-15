@@ -558,8 +558,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 100%;
 }
 
-.h-\[50\%\] {
-  height: 50%;
+.h-280 {
+  height: 280px;
 }
 
 .h-\[13\.5rem\] {
