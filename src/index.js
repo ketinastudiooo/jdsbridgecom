@@ -237,7 +237,7 @@ if (isMobile) {
     })
         .setPin("#scroll-slider")
         .addTo(scrollController)
-        .on('progress', progressAction)
+        .on('progress', _.throttle(progressAction, 200))
 
 
     var resizeAnimeTimeout = null;
@@ -246,7 +246,7 @@ if (isMobile) {
         if (window.scrollY >= scrollScene.triggerPosition() && window.scrollY <= scrollScene.triggerPosition()+scrollScene.duration()) {
             clearTimeout(resizeAnimeTimeout);
             resizeAnimeTimeout = setTimeout(function () {
-                console.log("runAnimation");
+                //console.log("runAnimation");
                 runAnimation(currentSlide);
             }, 500);
         }
