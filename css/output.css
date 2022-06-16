@@ -1339,6 +1339,8 @@ nav li:hover, nav li:active {
   bottom: 100px;
   display: flex;
   justify-content: flex-start;
+
+  transition: bottom 0.5s;
 }
 @media screen and (max-width:1023px) {
   .deco-dot {

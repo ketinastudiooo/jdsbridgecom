@@ -250,6 +250,10 @@ if (isMobile) {
                 runAnimation(currentSlide);
             }, 100);
         }
+
+        if ($slides.height() >= window.innerHeight) {
+            $(".deco-dot").css({"bottom": (64+$slides.height()-window.innerHeight)+"px"});
+        }
     });
 } else {
     var productScroll = ScrollTrigger.create({
