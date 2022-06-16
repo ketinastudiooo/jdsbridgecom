@@ -267,7 +267,6 @@ if (isMobile) {
         onUpdate: progressAction,
         onToggle: (self) => {
             isInProductSlide = self.isActive;
-            console.log("toggled, isActive:", self.isActive);
         }
     })
 }
@@ -275,7 +274,6 @@ if (isMobile) {
 
 ScrollTrigger.addEventListener("refresh", () => {
     scroller.update(); //locomotive-scroll
-    console.log("scrolltrigger refresh");
 }); 
 ScrollTrigger.refresh();
 
@@ -300,7 +298,7 @@ function progressAction(event) {
 }
 
 function changeSlide(index) { // index = 1
-    console.log("change to ", index);
+    //console.log("change to ", index);
     currentSlide = index;
     runAnimation(currentSlide);
 }
@@ -309,7 +307,7 @@ function runAnimation(index) {
     var slideDist = 0;
     if (window.innerWidth < 1024) {
         slideDist = $slides.height();
-        console.log("slideDist =", slideDist);
+        //console.log("slideDist =", slideDist);
         TweenMax.to($sliderWrapper, switchTime, { y: -slideDist * (index) });
     } else {
         slideDist = window.innerWidth;
