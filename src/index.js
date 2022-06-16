@@ -59,7 +59,29 @@ ScrollTrigger.create({
 
 
 
-let lastIpdateCompoundItem;
+let lastUpdateCompoundItem = false;
+$(".next").on("click", ()=>{
+    if (!lastUpdateCompoundItem) {
+        lastUpdateCompoundItem = true;
+        compoundList.scrollLeft += document.querySelector("#compound .slick-container .item-list .item").clientWidth;
+        setTimeout(()=>{
+            compoundList.append(compoundList.children[0]);
+            lastUpdateCompoundItem = false;
+        }, 400)
+    }
+})
+$(".prev").on("click", ()=>{
+    if (!lastUpdateCompoundItem) {
+        lastUpdateCompoundItem = true;
+        compoundList.scrollLeft -= document.querySelector("#compound .slick-container .item-list .item").clientWidth;
+        setTimeout(()=>{
+            compoundList.prepend(compoundList.children[compoundList.children.length - 1]);
+            lastUpdateCompoundItem = false;
+        }, 400)
+    }
+})
+
+/*
 function next() {
     compoundList.scrollLeft += document.querySelector("#compound .slick-container .item-list .item").clientWidth;
     setTimeout(() => {
@@ -72,7 +94,7 @@ function previous() {
     setTimeout(() => {
         compoundList.prepend(compoundList.children[compoundList.children.length - 1]);
     }, 400);
-}
+}*/
 
 let navIsOpen = false;
 let mobileNavTimeLine = gsap.timeline({ paused: true });
