@@ -31,7 +31,7 @@
             </div>
         </section>
         
-        <section id="about" class="pt-[11%] md:pt-0 flex flex-row justify-center section_item flex flex-col">
+        <section id="about" section-name="about" class="pt-[11%] md:pt-0 flex flex-row justify-center section_item flex flex-col">
             <div class="container px-[6%] py-[10%] leading-[16px] m-auto lg:py-[7%]">
                 <div class="inner-container flex flex-col lg:flex-row lg:justify-center lg:items-center">
                     <div class="container lg:px-[7%]">
@@ -170,7 +170,7 @@
             </div>
         </section>
 
-        <section id="products" class="pt-[11%] md:pt-0 lg:flex lg:justify-center section_item overflow-hidden">
+        <section id="products" section-name="products" class="pt-[11%] md:pt-0 lg:flex lg:justify-center section_item overflow-hidden">
             <div class="container px-[6%] py-[10%] pb-[5%] md:pb-10 lg:flex md:m-auto md:pb-[12%] lg:pb-[13%]">
                 <div class="lg:flex lg:flex-col lg:px-24">
                     <h1 class="py-[5%] text-3xl leading-8 text-main font-bold uppercase lg:text-4xl">Products
@@ -193,99 +193,100 @@
                     <img class="lg:hidden scale-[2.5] md:scale-125 md:pt-[10%] pt-[15%]" src="images/ProductBlack_small_blue.png" alt=""><img class="hidden lg:block min-w-full lg:pt-[5%] lg:scale-150 xl:scale-110" src="images/ProductBlack_blue.png" alt="">
                 </div>
             </div>
-            <div class="scroll-slider">
-                <div class="deco-text"><span>Bridgecom Plastic</span></div>
-                <div class="scroll-wrapper">
-                    <div class="scroll-slide">
-                        <div class="product-image"><img src="./images/ABS.png" alt="rABS"></div>
-                        <div class="product-introduce">
-                            <h1 class="title">rABS</h1><span class="text">The recyclate is suitable for applications:</br>
-                                </br>
-                                • Machinery</br>
-                                • Consumer Electronics </br>
-                                • Automobile</br>
-                                • Furniture</span>
-                        </div>
-                    </div>
-                    <div class="scroll-slide">
-                        <div class="product-image"><img src="./images/PE.png" alt="rPE"></div>
-                        <div class="product-introduce">
-                            <h1 class="title">rPE</h1>
-                            <span class="text">The recyclate is suitable for applications:</br>
-                                </br>
-                                • Bottles</br>
-                                • Pipes</br>
-                                • Boxes</br>
-                                • Drums</br>
-                                • Home Appliance</br>
-                                • Toys</span>
-                        </div>
-                    </div>
-                    <div class="scroll-slide">
-                        <div class="product-image"><img src="./images/PS.png" alt="rPS"></div>
-                        <div class="product-introduce">
-                            <h1 class="title">rPS</h1><span class="text">The recyclate is suitable for applications:</br>
-                                </br>
-                                • Electronics</br>
-                                • Home Appliances</span>
-                        </div>
-                    </div>
-                    <div class="scroll-slide">
-                        <div class="product-image"><img src="./images/PC.png" alt="rPC"></div>
-                        <div class="product-introduce">
-                            <h1 class="title">rPC</h1><span class="text">The recyclate is suitable for applications:</br>
-                                </br>
-                                • Electronic and Electrical Industry</span>
-                        </div>
-                    </div>
-                    <div class="scroll-slide">
-                        <div class="product-image"><img src="./images/PP.png" alt="rPP"></div>
-                        <div class="product-introduce">
-                            <h1 class="title">rPP</h1><span class="text">The recyclate is suitable for applications:</br>
-                                </br>
-                                • Sports Equipments</br>
-                                • Office Furniture Parts</br>
-                                • Auto Parts</br>
-                                • Flower Pots</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="navigation pagination">
-                    <div class="circle">
-                        <svg id="progress" class="progress" viewBox="0 0 200 200">
-                            <circle class="progress__background" cx="100" cy="100" r="95" stroke></circle>
-                            <circle class="progress__circle" cx="100" cy="100" r="95"></circle>
-                        </svg>
-                        <div class="counting">
-                            <span class="now">0
-                                <span class="counter-wrapper">
-                                    <div class="counter">
-                                        <span>1</span>
-                                        <span>2</span>
-                                        <span>3</span>
-                                        <span>4</span>
-                                        <span>5</span>
-                                    </div>
-                                </span>
-                            </span>
-                            <span class="total">/05</span>
-                        </div>
-                    </div>
+        </section>
 
+        <section id="scroll-slider" section-name="products">
+            <div class="deco-text"><span>Bridgecom Plastic</span></div>
+            <div class="scroll-wrapper">
+                <div class="scroll-slide">
+                    <div class="product-image"><img src="./images/ABS.png" alt="rABS"></div>
+                    <div class="product-introduce">
+                        <h1 class="title">rABS</h1><span class="text">The recyclate is suitable for applications:</br>
+                            </br>
+                            • Machinery</br>
+                            • Consumer Electronics </br>
+                            • Automobile</br>
+                            • Furniture</span>
+                    </div>
                 </div>
-                <div class="navigation deco-dot">
-                    <ul>
-                        <li class="bg-emphasize"></li>
-                        <li class="bg-main"></li>
-                        <li class="bg-second"></li>
-                        <li class="bg-second"></li>
-                        <li class="bg-second"></li>
-                    </ul>
+                <div class="scroll-slide">
+                    <div class="product-image"><img src="./images/PE.png" alt="rPE"></div>
+                    <div class="product-introduce">
+                        <h1 class="title">rPE</h1>
+                        <span class="text">The recyclate is suitable for applications:</br>
+                            </br>
+                            • Bottles</br>
+                            • Pipes</br>
+                            • Boxes</br>
+                            • Drums</br>
+                            • Home Appliance</br>
+                            • Toys</span>
+                    </div>
                 </div>
+                <div class="scroll-slide">
+                    <div class="product-image"><img src="./images/PS.png" alt="rPS"></div>
+                    <div class="product-introduce">
+                        <h1 class="title">rPS</h1><span class="text">The recyclate is suitable for applications:</br>
+                            </br>
+                            • Electronics</br>
+                            • Home Appliances</span>
+                    </div>
+                </div>
+                <div class="scroll-slide">
+                    <div class="product-image"><img src="./images/PC.png" alt="rPC"></div>
+                    <div class="product-introduce">
+                        <h1 class="title">rPC</h1><span class="text">The recyclate is suitable for applications:</br>
+                            </br>
+                            • Electronic and Electrical Industry</span>
+                    </div>
+                </div>
+                <div class="scroll-slide">
+                    <div class="product-image"><img src="./images/PP.png" alt="rPP"></div>
+                    <div class="product-introduce">
+                        <h1 class="title">rPP</h1><span class="text">The recyclate is suitable for applications:</br>
+                            </br>
+                            • Sports Equipments</br>
+                            • Office Furniture Parts</br>
+                            • Auto Parts</br>
+                            • Flower Pots</span>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation pagination">
+                <div class="circle">
+                    <svg id="progress" class="progress" viewBox="0 0 200 200">
+                        <circle class="progress__background" cx="100" cy="100" r="95" stroke></circle>
+                        <circle class="progress__circle" cx="100" cy="100" r="95"></circle>
+                    </svg>
+                    <div class="counting">
+                        <span class="now">0
+                            <span class="counter-wrapper">
+                                <div class="counter">
+                                    <span>1</span>
+                                    <span>2</span>
+                                    <span>3</span>
+                                    <span>4</span>
+                                    <span>5</span>
+                                </div>
+                            </span>
+                        </span>
+                        <span class="total">/05</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="navigation deco-dot">
+                <ul>
+                    <li class="bg-emphasize"></li>
+                    <li class="bg-main"></li>
+                    <li class="bg-second"></li>
+                    <li class="bg-second"></li>
+                    <li class="bg-second"></li>
+                </ul>
             </div>
         </section>
 
-        <section id="contact" class="pt-[11%] md:pt-0 relative section_item pt-[5%]">
+        <section id="contact" section-name="contact" class="pt-[11%] md:pt-0 relative section_item pt-[5%]">
             <div class="bg-emphasize flex flex-row flex-wrap lg:flex-nowrap lg:w-full lg:h-screen">
                 <div class="meta w-[38%] h-[38%] md:w-[30%] md:h-[30%] lg:shrink-1 lg:w-[38%] lg:h-[38%] xl:w-[52%] xl:h-[52%]">
                     <img class="object-cover w-full" src="images/plastic.png" alt="">
