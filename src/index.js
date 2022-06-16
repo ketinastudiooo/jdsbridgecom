@@ -282,19 +282,19 @@ ScrollTrigger.refresh();
 
 function progressAction(event) {
     var progress = event.progress;
-    if (progress >= 0.0 && progress <  0.2 && currentSlide!=0) {
+    if (progress >= 0.0 && progress <  0.2) {
         changeSlide(0);
     }
-    if (progress >= 0.2 && progress <  0.4 && currentSlide!=1) {
+    if (progress >= 0.2 && progress <  0.4) {
         changeSlide(1);
     }
-    if (progress >= 0.4 && progress <  0.6 && currentSlide!=2) {
+    if (progress >= 0.4 && progress <  0.6) {
         changeSlide(2);
     }
-    if (progress >= 0.6 && progress <  0.8 && currentSlide!=3) {
+    if (progress >= 0.6 && progress <  0.8) {
         changeSlide(3);
     }
-    if (progress >= 0.8 && progress <= 1.0 && currentSlide!=4) {
+    if (progress >= 0.8 && progress <= 1.0) {
         changeSlide(4);
     }
 }
