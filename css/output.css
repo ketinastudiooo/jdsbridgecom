@@ -2147,3 +2147,7 @@ nav li:hover, nav li:active {
     clip-path: inset(0 100% 0 0);
 	}
 }
+
+.container a {
+  cursor: pointer;
+}

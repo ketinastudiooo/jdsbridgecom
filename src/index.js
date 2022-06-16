@@ -6,7 +6,6 @@ const mobile_menu = document.getElementById("mobile-menu");
 const hamburgers = document.querySelectorAll("#mobile-icon .button-hamburger div");
 
 const navBar = document.querySelector("nav");
-const sections = document.querySelectorAll("section");
 const navLi = document.querySelectorAll("nav .container ul li");
 
 const compoundList = document.querySelector("#compound .slick-container .item-list");
@@ -36,6 +35,9 @@ ScrollTrigger.scrollerProxy(pageContainer, {
     pinType: pageContainer.style.transform ? "transform" : "fixed"
 });
 ScrollTrigger.defaults({ scroller: pageContainer });
+ScrollTrigger.addEventListener("refresh", () => {
+    scroller.update(); //locomotive-scroll
+}); 
 
 // header navigation backgroundcolor and size
 ScrollTrigger.create({
@@ -53,32 +55,6 @@ ScrollTrigger.create({
             item.style.background = "#FFF";
         });
     }
-});
-
-// Current Section Menu Item Active
-sections.forEach((section) => {
-    let sectionId = section.getAttribute("section-name");
-    ScrollTrigger.create({
-        trigger: section,
-        start: "top 70",
-        end: "bottom top",
-        onEnter: (self) => {
-            navLi.forEach((li) => {
-                li.classList.remove("active");
-                if (li.classList.contains(sectionId)) {
-                    li.classList.add("active");
-                }
-            });
-        },
-        onEnterBack: (self) => {
-            navLi.forEach((li) => {
-                li.classList.remove("active");
-                if (li.classList.contains(sectionId)) {
-                    li.classList.add("active");
-                }
-            });
-        }
-    });
 });
 
 
@@ -257,7 +233,7 @@ if (isMobile) {
     });
 } else {
     var productScroll = ScrollTrigger.create({
-        scroller: pageContainer,
+        //scroller: pageContainer,
         trigger: "#scroll-slider",
         pin: true,
         start: "top top",
@@ -272,9 +248,7 @@ if (isMobile) {
 }
 
 
-ScrollTrigger.addEventListener("refresh", () => {
-    scroller.update(); //locomotive-scroll
-}); 
+
 ScrollTrigger.refresh();
 
 
@@ -360,3 +334,81 @@ if (urlParams.has('test')) {
         $("#debug").html(sh + " " + vh);
     })
 }
+
+$(".home").on('click', () => {
+    scroller.scrollTo("top");
+})
+$(".about > a").on('click', () => {
+    scroller.scrollTo(document.querySelector("#about"));
+})
+$(".products > a").on('click', () => {
+    scroller.scrollTo(document.querySelector("#products"));
+})
+$(".contact > a").on('click', () => {
+    scroller.scrollTo(document.querySelector("#contact"));
+})
+
+
+
+
+
+ScrollTrigger.create({
+    trigger: "#about",
+    start: "top 70",
+    end: "+=50",
+    onEnter: (self) => {
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+            if (li.classList.contains("about")) {
+                li.classList.add("active");
+            }
+        });
+    },
+    onLeaveBack: (self) => {
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+        });
+    }
+});
+ScrollTrigger.create({
+    trigger: "#products",
+    start: "top 70",
+    end: "+=50",
+    onEnter: (self) => {
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+            if (li.classList.contains("products")) {
+                li.classList.add("active");
+            }
+        });
+    },
+    onLeaveBack: (self) => {
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+            if (li.classList.contains("about")) {
+                li.classList.add("active");
+            }
+        });
+    }
+});
+ScrollTrigger.create({
+    trigger: "#contact",
+    start: "top 70",
+    end: "+=50",
+    onEnter: (self) => {
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+            if (li.classList.contains("contact")) {
+                li.classList.add("active");
+            }
+        });
+    },
+    onLeaveBack: (self) => {
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+            if (li.classList.contains("products")) {
+                li.classList.add("active");
+            }
+        });
+    }
+});
