@@ -1,3 +1,5 @@
+const isMobile = (window.innerWidth < 1024) ? true : false;
+
 const mobile_icon = document.getElementById("mobile-icon");
 const mobile_menu = document.getElementById("mobile-menu");
 // hamburgers 三條線
@@ -56,7 +58,6 @@ ScrollTrigger.create({
 // Current Section Menu Item Active
 sections.forEach((section) => {
     let sectionId = section.getAttribute("section-name");
-    console.log(sectionId);
     ScrollTrigger.create({
         trigger: section,
         start: "top 70",
@@ -79,6 +80,8 @@ sections.forEach((section) => {
         }
     });
 });
+
+
 
 let lastIpdateCompoundItem;
 function next() {
@@ -204,6 +207,10 @@ var slidePos = null;
 var currentSlide = 0;
 var switchTime = 0.5;
 
+var isInProductSlide = false;
+var resizeAnimeTimeout = null;
+
+
 var dotClass = [
     ['bg-emphasize', 'bg-main', 'bg-second', 'bg-second', 'bg-second'],
     ['bg-second', 'bg-emphasize', 'bg-main', 'bg-second', 'bg-second'],
@@ -214,24 +221,60 @@ var dotClass = [
 
 var desktopDuration = 5000;
 var mobileDuration = 10000;
-var sceneDuration = (window.innerWidth < 1280) ? mobileDuration : desktopDuration;
+var sceneDuration = (window.innerWidth < 1024) ? mobileDuration : desktopDuration;
 
 //Create Tween
 scrollTimeline = createScrollAnimation();
-ScrollTrigger.create({
-    scroller: pageContainer,
-    trigger: "#scroll-slider",
-    pin: true,
-    start: "top top",
-    end: "+="+sceneDuration,
-    
-    scrub: true,
-    onUpdate: progressAction,
-    //markers: true,
-})
 
-ScrollTrigger.addEventListener("refresh", () => scroller.update()); //locomotive-scroll
+
+
+if (isMobile) {
+    scrollController = new ScrollMagic.Controller();
+    scrollScene = new ScrollMagic.Scene({
+        triggerElement: "#scroll-slider",
+        triggerHook: "onLeave",
+        duration: sceneDuration
+    })
+        .setPin("#scroll-slider")
+        .addTo(scrollController)
+        .on('progress', progressAction)
+
+
+    var resizeAnimeTimeout = null;
+    $(window).on( 'resize', function() {
+        console.log("resize");
+        if (window.scrollY >= scrollScene.triggerPosition() && window.scrollY <= scrollScene.triggerPosition()+scrollScene.duration()) {
+            clearTimeout(resizeAnimeTimeout);
+            resizeAnimeTimeout = setTimeout(function () {
+                console.log("runAnimation");
+                runAnimation(currentSlide);
+            }, 100);
+        }
+    });
+} else {
+    var productScroll = ScrollTrigger.create({
+        scroller: pageContainer,
+        trigger: "#scroll-slider",
+        pin: true,
+        start: "top top",
+        end: "+="+sceneDuration,
+
+        scrub: true,
+        onUpdate: progressAction,
+        onToggle: (self) => {
+            isInProductSlide = self.isActive;
+            console.log("toggled, isActive:", self.isActive);
+        }
+    })
+}
+
+
+ScrollTrigger.addEventListener("refresh", () => {
+    scroller.update(); //locomotive-scroll
+    console.log("scrolltrigger refresh");
+}); 
 ScrollTrigger.refresh();
+
 
 function progressAction(event) {
     var progress = event.progress;
