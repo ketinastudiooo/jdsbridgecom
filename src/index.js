@@ -248,7 +248,7 @@ if (isMobile) {
             resizeAnimeTimeout = setTimeout(function () {
                 console.log("runAnimation");
                 runAnimation(currentSlide);
-            }, 100);
+            }, 500);
         }
 
         if ($slides.height() >= window.innerHeight) {
