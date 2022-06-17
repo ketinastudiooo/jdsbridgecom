@@ -81,21 +81,6 @@ $(".prev").on("click", ()=>{
     }
 })
 
-/*
-function next() {
-    compoundList.scrollLeft += document.querySelector("#compound .slick-container .item-list .item").clientWidth;
-    setTimeout(() => {
-        compoundList.append(compoundList.children[0]);
-    }, 400);
-}
-
-function previous() {
-    compoundList.scrollLeft -= document.querySelector("#compound .slick-container .item-list .item").clientWidth;
-    setTimeout(() => {
-        compoundList.prepend(compoundList.children[compoundList.children.length - 1]);
-    }, 400);
-}*/
-
 let navIsOpen = false;
 let mobileNavTimeLine = gsap.timeline({ paused: true });
 
@@ -369,10 +354,6 @@ $(".products > a").on('click', () => {
 $(".contact > a").on('click', () => {
     scroller.scrollTo(document.querySelector("#contact"));
 })
-
-
-
-
 
 ScrollTrigger.create({
     trigger: "#about",
