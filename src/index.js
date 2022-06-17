@@ -235,7 +235,7 @@ if (isMobile) {
         }
 
         if ($slides.height() >= window.innerHeight) {
-            $(".deco-dot").css({"bottom": (64+$slides.height()-window.innerHeight)+"px"});
+            $(".deco-dot").css({"bottom": (32+$slides.height()-window.innerHeight)+"px"});
         }
     });
 } else {
