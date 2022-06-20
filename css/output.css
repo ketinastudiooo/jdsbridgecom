@@ -972,6 +972,8 @@ nav .container {
   align-items: center;
   justify-content: center;
   justify-content: space-between;
+
+  min-height: 72px;
 }
 
 #mobile-icon {
@@ -1304,7 +1306,7 @@ nav li:hover, nav li:active {
   .product-image {
     position: relative;
     padding: 0px;
-    max-width: 64vw;
+    max-width: 40vw;
   }
 }
 
@@ -1584,6 +1586,8 @@ nav li:hover, nav li:active {
   .navigation .circle {
     height: 8vw;
     width: 8vw;
+    min-width: 120px;
+    min-height: 120px;
   }
 
   .navigation .counting {
