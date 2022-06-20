@@ -15,7 +15,8 @@ gsap.registerPlugin(ScrollTrigger);
 const pageContainer = document.querySelector("#page-container");
 const scroller = new LocomotiveScroll({
     el: pageContainer,
-    smooth: true
+    smooth: true,
+    
 });
 scroller.on("scroll", ScrollTrigger.update);
 ScrollTrigger.scrollerProxy(pageContainer, {

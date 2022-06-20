@@ -1216,10 +1216,13 @@ nav li:hover, nav li:active {
 
 .navigation .counting .now {
   margin-right: 16px;
+
   font-size: 30px;
   line-height: 1.2;
   font-weight: 600;
   color: rgb(50 121 206);
+
+  height: 1.2em;
 }
 @media screen and (max-width:1023px) {
   .navigation .counting .now {
@@ -1602,10 +1605,6 @@ nav li:hover, nav li:active {
     font-weight: 500;
     color: rgb(196 196 196);
   }
-
-  /* .product-box {
-        @apply flex flex-nowrap
-    } */
 
   .product {
     margin-bottom: 0px;
@@ -2076,12 +2075,7 @@ nav li:hover, nav li:active {
 .counter-wrapper .counter {
 	position: relative;
 	width: 21px;
-	height: 38px;
-}
-@media screen and (max-width:1023px) {
-  .counter-wrapper .counter {
-    height: 28px;
-  }
+	height: 1.2em;
 }
 
 .counter-wrapper .counter span {
