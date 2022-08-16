@@ -1305,7 +1305,7 @@ nav li:hover, nav li:active {
 
 .product-introduce {
   display: grid;
-  grid-auto-flow: column;
+  grid-auto-flow: row;
   align-items: flex-start;
   justify-content: center;
   padding-left: 4vw;
@@ -1318,6 +1318,7 @@ nav li:hover, nav li:active {
 }
 
 .product-introduce h1 {
+  padding-left: 1.25rem;
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 1;
@@ -1325,7 +1326,7 @@ nav li:hover, nav li:active {
 }
 
 .product-introduce .text {
-  padding-left: 1.5rem;
+  padding-left: 1.25rem;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
@@ -2143,4 +2144,34 @@ nav li:hover, nav li:active {
 		transform: scaleX(1);
     clip-path: inset(0 100% 0 0);
 	}
+}
+
+.button-datasheet {
+  /*padding-left: 5rem;*/
+  width: 180px;
+  background: #165DB2;
+  border-radius: 999px;
+  box-shadow: #a1a1b2 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 100;
+  line-height: 24px;
+  text-align: center;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  word-break: break-word;
+  border: 0;
+  transition: 0.5s;
+  
+}
+
+.button-datasheet:hover {
+  opacity: 0.7;
 }
